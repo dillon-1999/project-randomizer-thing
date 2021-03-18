@@ -1,0 +1,25 @@
+{
+  "name": "project-randomizer",
+  "version": "1.0.0",
+  "description": "Project Randomizer for Web Dev",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init-db": "sqlite3 ./Database/ProjectRandomizer.db <./Database/schema.sql",
+    "start-dev": "npm run init-db & nodemon index.js"
+  },
+  "author": "Dillon Boatman",
+  "license": "ISC",
+  "dependencies": {
+    "argon2": "^0.27.1",
+    "better-sqlite3": "^7.1.2",
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "redis": "^3.0.2",
+    "sqlite3": "^5.0.2",
+    "uuidv4": "^6.2.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
