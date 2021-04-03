@@ -40,7 +40,7 @@ class UserModel {
             stmt.run({newEmailAddr, userID});
             return true;
         } catch (err){
-            console.log(err);
+            console.error(err);
             return false;
         }
     }
@@ -58,7 +58,7 @@ class UserModel {
             stmt.run({newUsername, userID});
             return true;
         } catch (err){
-            console.log(err);
+            console.error(err);
             return false;
         }
     }
@@ -76,7 +76,7 @@ class UserModel {
             stmt.run({userID});
             return true;
         } catch (err){
-            console.log(err);
+            console.error(err);
             return false;
         }
     }
@@ -94,7 +94,7 @@ class UserModel {
             stmt.run({userID});
             return true;
         } catch (err){
-            console.log(err);
+            console.error(err);
             return false;
         }
     }
@@ -112,7 +112,7 @@ class UserModel {
             stmt.run({userID});
             return true;
         } catch (err){
-            console.log(err);
+            console.error(err);
             return false;
         }
     }
@@ -124,7 +124,7 @@ class UserModel {
             stmt.run({userID});
             return true;
         } catch(err){
-            console.log(err);
+            console.error(err);
             return false;
         }
     }
@@ -135,7 +135,7 @@ class UserModel {
             const stmt = db.prepare(sql);
             return stmt.get({email});
         } catch(err){
-            console.log(err);
+            console.error(err);
             return false;
         }
     }
@@ -149,7 +149,7 @@ class UserModel {
             const stmt = db.prepare(sql);
             return stmt.get({userID});
         } catch(err) {
-            console.log(err);
+            console.error(err);
             return false;
         }
     }
@@ -163,7 +163,7 @@ class UserModel {
             const stmt = db.prepare(sql);
             return stmt.all();
         } catch(err) {
-            console.log(err);
+            console.error(err);
             return false;
         }
     }

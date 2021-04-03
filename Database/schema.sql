@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS Users (
 CREATE TABLE IF NOT EXISTS Projects (
     projectID TEXT PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,
+    desc TEXT,
     difficulty TEXT NOT NULL DEFAULT 0 -- 0,1,2 : beginner, medium, hard
 );
 
