@@ -13,9 +13,9 @@ class ProjectsModel {
         try {
             const sql = `
                 INSERT INTO Projects
-                    (projectID, name, desc, difficulty)
+                    (projectID, name, description, difficulty)
                 VALUES
-                    (@projectID, @name, @desc, @difficulty)`;
+                    (@projectID, @name, @description, @difficulty)`;
             const stmt = db.prepare(sql);
 
             project.projectID = uuidV4();

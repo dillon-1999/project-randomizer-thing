@@ -15,13 +15,13 @@ class OpenProjectsModel {
                 INSERT INTO OpenProjects
                     (openID, project, author, startedOn)
                 VALUES
-                    (openID, project, author, startedOn)`;
+                    (@openID, @project, @author, @startedOn)`;
             const stmt = db.prepare(sql);
 
             openProject.openID = uuidV4();
             openProject.startedOn = Date.now();
 
-            stmt.run(openProject);
+            stmt.run({openProject});
             return true;
         }
         catch
@@ -50,20 +50,24 @@ class OpenProjectsModel {
     }
 
     //Find projects by the ProjectID (not OpenID)
-    findProjectsByProjectID (project)
+    /*
+        changed param to projectID so the object could be simplified
+        from project.projectID to projectID
+    */
+    findProjectsByProjectID (projectID)
     {
         try
         {
             const sql = `
                 SELECT *
                 FROM OpenProjects
-                WHERE projectID = @projectID`;
+                WHERE project = @projectID`;
             const stmt = db.prepare(sql);
-            return stmt.all({projectID: project.projectID}) //Check this specifically
+            return stmt.all({projectID});
         }
         catch (err)
         {
-            console.error(err)
+            console.error(err);
             return false;
         }
     }

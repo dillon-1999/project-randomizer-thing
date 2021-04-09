@@ -154,6 +154,22 @@ class UserModel {
         }
     }
 
+    getUserDataByEmail(email){
+        try {
+            const sql = `
+                SELECT
+                    userID, username, role
+                FROM
+                    Users
+                WHERE
+                    email=@email
+            `;
+            return db.prepare(sql).get({email});
+        } catch(err){
+            console.error(err);
+            return false;
+        }
+    }
     getUsers(){
         try{
             const sql = `
@@ -168,5 +184,7 @@ class UserModel {
         }
     }
 }
+let users = new UserModel(db);
 
+console.log(users.getUsers());
 exports.userModel = new UserModel(db);
