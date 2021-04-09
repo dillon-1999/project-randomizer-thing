@@ -91,4 +91,5 @@ usersRouter.post('/logout', (req, res) => {
 	})
     console.log(req.session)
 });
+
 module.exports = usersRouter;

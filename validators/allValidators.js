@@ -10,10 +10,12 @@ const VALIDATION_OPTIONS = {
 
 const {userSchema} = require("./userValidator");
 const {loginSchema} = require("./loginValidator");
+const {projectSchema} = require("./projectValidator");
 
 const schemas = {
     userSchema,
-	loginSchema
+	loginSchema,
+	projectSchema
 };
 
 exports.schemas = schemas;

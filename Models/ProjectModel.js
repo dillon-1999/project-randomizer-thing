@@ -68,5 +68,15 @@ class ProjectsModel {
         }
     }
 
+    getProjects(){
+        try{
+            const sql = `SELECT * FROM Projects`;
+            return db.prepare(sql).all();
+        } catch{
 
+        }
+    }
 }
+let p = new ProjectsModel(db);
+console.log(p.getProjects())
+exports.projectModel = new ProjectsModel(db);
