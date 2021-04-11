@@ -1,6 +1,6 @@
 "use strict";
 const { db } = require("./db");
-
+const uuidV4 = require('uuid').v4;
 class OpenProjectsModel {
     constructor (db)
     {
@@ -17,19 +17,32 @@ class OpenProjectsModel {
                 VALUES
                     (@openID, @project, @author, @startedOn)`;
             const stmt = db.prepare(sql);
-
+            console.log(openProject)
             openProject.openID = uuidV4();
             openProject.startedOn = Date.now();
 
-            stmt.run({openProject});
+            stmt.run(openProject);
             return true;
         }
-        catch
+        catch(err)
         {
             console.error(err);
             return false;
         }
     }
+
+    // uploadSingleFile(fileHash, project){
+    //     try {
+    //         const sql = `UPDATE OpenProjects
+    //                      SET fileHash
+    //                      WHERE
+    //                      project = @projectID`;
+    //         return db.prepare(sql).run({fileHash, project});
+    //     } catch (err){
+    //         console.error(err);
+    //         return false;
+    //     }
+    // }
 
     findProjectsByUser (userID)
     {
@@ -50,7 +63,7 @@ class OpenProjectsModel {
     }
 
     //Find projects by the ProjectID (not OpenID)
-    /*
+    /* dillon: 
         changed param to projectID so the object could be simplified
         from project.projectID to projectID
     */
@@ -106,12 +119,17 @@ class OpenProjectsModel {
             stmt.run({date, openID});
             return true;            
         }
-        catch
+        catch(err)
         {
-            console.error();
+            console.error(err);
             return false;
         }
     }
 
 
 }
+
+const p = new OpenProjectsModel(db);
+// j//@openID, @project, @author, @startedOn
+console.log(p.findProjectsByProjectID('49ad4819-8285-4b9f-80d9-954ec035f3c8'));
+exports.openProjectsModel = new OpenProjectsModel(db);

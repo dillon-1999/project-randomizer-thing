@@ -68,8 +68,7 @@ usersRouter.post("/login", async (req, res) => {
 				req.session.username = username;
 				req.session.role = role;
 				req.session.isLoggedIn = true;
-				res.redirect('/homepage.html');
-                console.log(req.session);
+				res.redirect('/homepage.html'); // show different page for user/admins?
 			});
 		} else {
 			return res.sendStatus(400);
@@ -81,6 +80,25 @@ usersRouter.post("/login", async (req, res) => {
     
 });
 
+// sends id over route params
+usersRouter.delete('/remove', (req, res) =>{
+	if(req.session.role !== 1){ // must be a admin
+		return res.sendStatus(404);
+	}
+	// TODO: add in validation for the route param? maybe not
+	try {
+		const deleted = userModel.deleteUser(req.params.userID);
+		if(deleted){
+			res.sendStatus(200);
+		} else {
+			res.sendStatus(500);
+		}
+	} catch(err) {
+		console.error(err);
+		res.sendStatus(500);
+	}
+});
+
 usersRouter.post('/logout', (req, res) => {
 	req.session.destroy((err) => {
 		if(err){
@@ -90,6 +108,42 @@ usersRouter.post('/logout', (req, res) => {
 		res.redirect('/login.html');
 	})
     console.log(req.session)
+});
+
+usersRouter.post('/upgrade', (req, res) => {
+	if(req.session.role !== 1){
+		return res.sendStatus(404);
+	}
+	
+	try {
+		const upgraded = userModel.upgradeToAdmin(req.params.userID);
+		if(upgraded){
+			res.sendStatus(200);
+		} else {
+			res.sendStatus(500);
+		}
+	} catch(err) {
+		console.error(err);
+		return res.sendStatus(500);
+	}
+});
+
+usersRouter.post('/revoke', (req, res) => {
+	if(req.session.role !== 1){
+		return res.sendStatus(404);
+	}
+	
+	try {
+		const revoked = userModel.revokeAdmin(req.params.userID);
+		if(revoked){
+			res.sendStatus(200);
+		} else {
+			res.sendStatus(500);
+		}
+	} catch(err) {
+		console.error(err);
+		return res.sendStatus(500);
+	}
 });
 
 module.exports = usersRouter;

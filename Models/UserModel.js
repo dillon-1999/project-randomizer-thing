@@ -170,6 +170,8 @@ class UserModel {
             return false;
         }
     }
+
+    // really just used for testing
     getUsers(){
         try{
             const sql = `
