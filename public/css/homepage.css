@@ -1,0 +1,17 @@
+body {
+    background: linear-gradient(to bottom, #808080 0%, #1a1a1a 100%) fixed;
+}
+
+.options {
+    height: 5rem;
+    width: 15rem;
+    padding: 1rem;
+    color: black;
+}
+.options:hover{
+    color: grey;
+    background-color: linear-gradient(to-bottom, whitesmoke 5%, grey 100%, );
+}
+/*
+Currently you cannot change the backgrounds of buttons, still investgating why
+*/

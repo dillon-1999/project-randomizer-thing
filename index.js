@@ -47,7 +47,7 @@ app.use('/users', usersRouter);
 app.use('/projects', projectsRouter);
 app.use('/openProjects', openProjectsRouter);
 
-
+//app.set('view engine', 'ejs'); //Apparently this breaks the server and /it shouldn't/.
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
