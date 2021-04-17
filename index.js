@@ -8,7 +8,6 @@ const redis = require('redis');
 const session = require('express-session');
 let RedisStore = require("connect-redis")(session);
 let redisClient = redis.createClient();
-
 const sessionConfig = {
     store: new RedisStore({ client: redisClient }),
     secret: "somethingSecret", // TODO: place somewhere else
@@ -25,13 +24,14 @@ const sessionConfig = {
 const usersRouter = require("./Controllers/UserController");
 const projectsRouter = require("./Controllers/ProjectController");
 const openProjectsRouter = require("./Controllers/OpenProjectsController");
-
+app.set('view engine', 'ejs');
 app.use(session(sessionConfig));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, "public"), {
     extensions: ['html'],
 }));
+
 app.use('/users', usersRouter);
 app.use('/projects', projectsRouter);
 app.use('/openProjects', openProjectsRouter);

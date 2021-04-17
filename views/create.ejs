@@ -12,16 +12,18 @@
         <h1 style="margin-bottom: 0; font-size:80px;">{*}SNWBL</h1>
         <h3 style="margin-top:0; margin-left: 105px;">Practice. Learn. Grow. Teach.</h3>
     </div>
-    <% if (role === 1) { %>
+    <% console.log(session) %>
+    <% if (session.role === 1) { %>
+        
     <div>
-        <form id="createProjectForm" action="/create" method="POST">
+        <form id="createProjectForm" action="/projects/create" method="POST">
             <div>
                 <label for="proj_name">Project Name:</label>
-                <input id="proj_name" name="proj_name" type="text" required>
+                <input id="proj_name" name="name" type="text" required>
             </div>
             <div>
                 <label for="proj_desc">Description:</label>
-                <input id="proj_desc" name="proj_desc" type="text" required>
+                <input id="proj_desc" name="description" type="text" required>
             </div>
             <div>
                 <label for="difficulty">Difficulty:</label>

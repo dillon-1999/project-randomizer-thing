@@ -38,16 +38,6 @@ usersRouter.post("/", async (req, res) => {
 
 
 usersRouter.post("/login", async (req, res) => {
-    if(!req.session.loginAttempts){
-		req.session.loginAttempts = 0;
-	} else {
-		if(req.session.loginAttemps === 5){
-			return res.sendStatus(429);
-		}
-		req.session.loginAttempts = req.session.loginAttemps + 1;
-	}
-	console.log(req.session.loginAttemps);
-
 	const {value, error} = schemas.loginSchema.validate(req.body, VALIDATION_OPTIONS);
 
     if(error){
@@ -91,7 +81,7 @@ usersRouter.post("/login", async (req, res) => {
 });
 
 // sends id over route params
-usersRouter.delete('/remove', (req, res) =>{
+usersRouter.delete('/remove/:userID', (req, res) =>{
 	if(req.session.role !== 1){ // must be a admin
 		return res.sendStatus(404);
 	}
@@ -120,10 +110,10 @@ usersRouter.post('/logout', (req, res) => {
     console.log(req.session)
 });
 
-usersRouter.post('/upgrade', (req, res) => {
-	if(req.session.role !== 1){
-		return res.sendStatus(404);
-	}
+usersRouter.post('/upgrade/:userID', (req, res) => {
+	// if(req.session.role !== 1){
+	// 	return res.sendStatus(404);
+	// }
 	
 	try {
 		const upgraded = userModel.upgradeToAdmin(req.params.userID);
@@ -138,7 +128,7 @@ usersRouter.post('/upgrade', (req, res) => {
 	}
 });
 
-usersRouter.post('/revoke', (req, res) => {
+usersRouter.post('/revoke/:userID', (req, res) => {
 	if(req.session.role !== 1){
 		return res.sendStatus(404);
 	}

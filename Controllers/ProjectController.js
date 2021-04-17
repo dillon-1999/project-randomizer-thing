@@ -7,7 +7,7 @@ const {schemas, VALIDATION_OPTIONS} = require("../validators/allValidators");
 
 
 projectsRouter.post("/create", (req, res) =>{
-    
+    console.log("POST /create")
     if(req.session.role !== 1){
         return res.sendStatus(404)
     }
@@ -39,7 +39,7 @@ projectsRouter.post("/create", (req, res) =>{
 });
 
 projectsRouter.get("/create", (req, res) =>{
-    res.render('create', {role: req.session.role});
+    res.render('create', {session: req.session});
 });
 
 projectsRouter.patch("/updateProject", (req, res) => {
@@ -68,7 +68,7 @@ projectsRouter.patch("/updateProject", (req, res) => {
     
 });
 
-projectsRouter.delete("/deleteProject", (req, res) => {
+projectsRouter.delete("/deleteProject/:projectID", (req, res) => {
     if(req.session.role !== 1){
         return res.sendStatus(404);
     }

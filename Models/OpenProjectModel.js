@@ -17,7 +17,6 @@ class OpenProjectsModel {
                 VALUES
                     (@openID, @project, @author, @startedOn)`;
             const stmt = db.prepare(sql);
-            console.log(openProject)
             openProject.openID = uuidV4();
             openProject.startedOn = Date.now();
 
@@ -126,10 +125,19 @@ class OpenProjectsModel {
         }
     }
 
-
+    getOpenProjects(){
+        try{
+            const sql = `SELECT * FROM OpenProjects`;;
+            return db.prepare(sql).all();
+        } catch(err) {
+            console.error(err);
+            return false;
+        }
+    }
 }
 
-// const p = new OpenProjectsModel(db);
+const p = new OpenProjectsModel(db);
+console.log(p.getOpenProjects());
 // j//@openID, @project, @author, @startedOn
 // console.log(p.findProjectsByProjectID('49ad4819-8285-4b9f-80d9-954ec035f3c8'));
 exports.openProjectsModel = new OpenProjectsModel(db);

@@ -2,7 +2,7 @@
 
 const express = require("express");
 const openProjectsRouter = express.Router();
-const { openProjectModel } = require("../Models/OpenProjectModel");
+const { openProjectsModel } = require("../Models/OpenProjectModel");
 const multer = require('multer');
 
 let storage = multer.diskStorage({
@@ -26,6 +26,28 @@ let upload = multer({storage});
 //     }
 // });
 
+
+// idk, send the userID and projectID via query
+openProjectsRouter.post('/openProject', (req, res) => {
+    console.log("POST /openProject");
+    if(!req.session.isLoggedIn){
+        return res.sendStatus(403);
+    }
+    const {project, author} = req.query;
+    try{
+        const didOpen = openProjectsModel.createOpenProject({project, author});
+        if(didOpen){
+            return res.sendStatus(200);
+        } else {
+            return res.sendStatus(500);
+        }
+    } catch (err){
+        console.error(err);
+        return res.sendStatus(500);
+    }
+});
+
+
 openProjectsRouter.post('/uploadMultiple', upload.array('files', 5), (req, res) => {
     try{
         console.log(req.files)
@@ -34,5 +56,7 @@ openProjectsRouter.post('/uploadMultiple', upload.array('files', 5), (req, res) 
         res.send(err);
     }
 });
+
+
 
 module.exports = openProjectsRouter;

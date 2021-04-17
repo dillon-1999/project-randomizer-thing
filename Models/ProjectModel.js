@@ -8,12 +8,12 @@ class ProjectsModel {
         this.db = db;
     }
 
-    createProject (openProject)
+    createProject (project)
     {
         try {
             const sql = `
                 INSERT INTO Projects
-                    (project, name, description, difficulty)
+                    (projectID, name, description, difficulty)
                 VALUES
                     (@projectID, @name, @description, @difficulty)`;
             const stmt = db.prepare(sql);
