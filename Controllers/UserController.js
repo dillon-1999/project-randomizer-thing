@@ -68,7 +68,7 @@ usersRouter.post("/login", async (req, res) => {
 				req.session.username = username;
 				req.session.role = role;
 				req.session.isLoggedIn = true;
-				res.redirect('/homepage.html'); // show different page for user/admins?
+				res.redirect('/users/homepage'); // show different page for user/admins?
 			});
 		} else {
 			return res.sendStatus(400);
@@ -78,6 +78,10 @@ usersRouter.post("/login", async (req, res) => {
 		return res.sendStatus(500);
 	}
     
+});
+
+usersRouter.get('/homepage', (req, res) =>{
+	res.render('homepage', {session: req.session});
 });
 
 // sends id over route params

@@ -28,7 +28,7 @@ projectsRouter.post("/create", (req, res) =>{
         });
 
         if(projAdded){
-            res.sendStatus(200);
+            res.redirect('/users/homepage');
         } else {
             res.sendStatus(400);
         }
