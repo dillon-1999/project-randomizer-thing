@@ -37,7 +37,6 @@ app.use('/projects', projectsRouter);
 app.use('/openProjects', openProjectsRouter);
 
 
-
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });

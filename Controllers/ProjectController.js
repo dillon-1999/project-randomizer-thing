@@ -38,6 +38,10 @@ projectsRouter.post("/create", (req, res) =>{
     }
 });
 
+projectsRouter.get("/create", (req, res) =>{
+    res.render('create', {role: req.session.role});
+});
+
 projectsRouter.patch("/updateProject", (req, res) => {
     if(req.session.role !== 1){
         return res.sendStatus(403);
