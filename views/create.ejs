@@ -5,17 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{*}SNWBL - Create Project</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
     <div>
         <h1 style="margin-bottom: 0; font-size:80px;">{*}SNWBL</h1>
         <h3 style="margin-top:0; margin-left: 105px;">Practice. Learn. Grow. Teach.</h3>
     </div>
-    <div>
-        <h4>504 - Not Implimented</h4>
-        <h6>Admin Access to create new projects for users to do</h6>
-    </div>
+    <% if (role === 1) { %>
     <div>
         <form id="createProjectForm" action="/create" method="POST">
             <div>
@@ -33,5 +30,11 @@
         </form>
         <button form="createProjectForm">Submit</button>
     </div>
+    <% } else { %>
+    <div>
+        <h4>403 - Access Denied</h4>
+        <h6>Admin Access Required to Create Projects</h6>
+    </div>
+    <% } %>
 </body>
 </html>
