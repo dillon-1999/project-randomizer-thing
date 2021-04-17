@@ -129,7 +129,7 @@ class OpenProjectsModel {
 
 }
 
-const p = new OpenProjectsModel(db);
+// const p = new OpenProjectsModel(db);
 // j//@openID, @project, @author, @startedOn
-console.log(p.findProjectsByProjectID('49ad4819-8285-4b9f-80d9-954ec035f3c8'));
+// console.log(p.findProjectsByProjectID('49ad4819-8285-4b9f-80d9-954ec035f3c8'));
 exports.openProjectsModel = new OpenProjectsModel(db);

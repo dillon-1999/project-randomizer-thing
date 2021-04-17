@@ -4,7 +4,6 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const PORT = 8005;
-const multer = require('multer');
 const redis = require('redis');
 const session = require('express-session');
 let RedisStore = require("connect-redis")(session);
@@ -22,16 +21,6 @@ const sessionConfig = {
     }
 };
 
-let storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads');
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now());
-    }
-});
-
-let upload = multer({storage});
 // routers to each controller
 const usersRouter = require("./Controllers/UserController");
 const projectsRouter = require("./Controllers/ProjectController");

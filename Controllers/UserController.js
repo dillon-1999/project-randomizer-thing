@@ -38,7 +38,17 @@ usersRouter.post("/", async (req, res) => {
 
 
 usersRouter.post("/login", async (req, res) => {
-    const {value, error} = schemas.loginSchema.validate(req.body, VALIDATION_OPTIONS);
+    if(!req.session.loginAttempts){
+		req.session.loginAttempts = 0;
+	} else {
+		if(req.session.loginAttemps === 5){
+			return res.sendStatus(429);
+		}
+		req.session.loginAttempts = req.session.loginAttemps + 1;
+	}
+	console.log(req.session.loginAttemps);
+
+	const {value, error} = schemas.loginSchema.validate(req.body, VALIDATION_OPTIONS);
 
     if(error){
         const errorMessages = error.details.map(error => error.message);
