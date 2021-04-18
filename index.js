@@ -6,6 +6,7 @@ const path = require("path");
 const PORT = 8005;
 const redis = require('redis');
 const session = require('express-session');
+const cors = require('cors');
 let RedisStore = require("connect-redis")(session);
 let redisClient = redis.createClient();
 const sessionConfig = {
@@ -24,6 +25,7 @@ const sessionConfig = {
 const usersRouter = require("./Controllers/UserController");
 const projectsRouter = require("./Controllers/ProjectController");
 const openProjectsRouter = require("./Controllers/OpenProjectsController");
+app.use(cors())
 app.set('view engine', 'ejs');
 app.use(session(sessionConfig));
 app.use(express.json());

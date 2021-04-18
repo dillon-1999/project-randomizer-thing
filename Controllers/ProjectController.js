@@ -42,6 +42,13 @@ projectsRouter.get("/create", (req, res) =>{
     res.render('create', {session: req.session});
 });
 
+projectsRouter.get("/getAllProjects", (req, res) =>{
+    // TODO: validate this stuff
+    const projects = projectModel.getProjects();
+    const success = (projects) ? true : false;
+    res.render('getProjects', {session: req.session, projects, success});
+});
+
 projectsRouter.patch("/updateProject", (req, res) => {
     if(req.session.role !== 1){
         return res.sendStatus(403);

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{*}SNWBL - Homepage</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <!-- <script defer>
+        async function updatePath(userID, isDemote){
+            const move = (isDemote) ? "revoke" : "upgrade";
+            await fetch(`http://localhost/users/${move}/${userID}`);
+        }
+    </script> -->
+</head>
+<body>
+    <div>
+        <div>
+            <h1 style="margin-bottom: 0; font-size:30px;">{*}SNWBL</h1>
+            <h3 style="margin-top:0; margin-left: 30px;">Practice. Learn. Grow. Teach.</h3>
+        </div>
+        <div>
+            <div class='scrollable'>
+            <% if(session.role === 1 && session.isLoggedIn === true) { %>
+                <% if(users.length === 0){ %>
+                    <h2>No Users to Display</h2>
+                <% } %>
+                <% for( let i = 0; i < users.length; i++) { %>
+                    <div>
+                        <p class="name"> Username: <%= users[i].username %> </p>
+                        <p class="description"> Email: <%= users[i].email %> </p>
+                        <p class="difficulty"> Role: <%= users[i].role %> </p>
+                        
+                        <% if(users[i].role === 1){ %>
+                            <form action='/users/revoke/<%= users[i].userID %>' method="POST"> 
+                                <button> Revoke Admin </button>
+                            </form>
+                            <% } else { %>
+                                <form action="/users/upgrade/<%= users[i].userID %>" method="POST"> 
+                                    <button> Upgrade Admin </button>
+                                </form>
+                        <% } %>
+                    </div>
+                    <hr>
+                <% } %>
+                
+                <% } else { %>
+                    <div>
+                        <h4>403 - Access Denied</h4>
+                        <h6>Admin Access Required to Create Projects</h6>
+                    </div>
+            <% } %>  
+            </div>
+            <form action="/users/logout", method="POST", id="logoutForm">
+                <button>Logout</button>
+            </form>
+            <form action='/users/homepage'>
+                <button>Back to homepage!</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

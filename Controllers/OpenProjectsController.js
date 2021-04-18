@@ -3,6 +3,9 @@
 const express = require("express");
 const openProjectsRouter = express.Router();
 const { openProjectsModel } = require("../Models/OpenProjectModel");
+const { userModel } = require("../Models/UserModel");
+const { projectsModel } = require("../Models/ProjectModel");
+
 const multer = require('multer');
 
 let storage = multer.diskStorage({
@@ -57,6 +60,10 @@ openProjectsRouter.post('/uploadMultiple', upload.array('files', 5), (req, res) 
     }
 });
 
-
+openProjectsRouter.get("/getAllOpenProjects", (req, res) => {
+    const projects = openProjectsModel.getOpenProjects();
+    const success = (projects) ? true : false;
+    res.render("getOpenProjects", {session: req.session, projects, success})
+});
 
 module.exports = openProjectsRouter;

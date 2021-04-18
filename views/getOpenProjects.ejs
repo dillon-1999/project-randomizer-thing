@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{*}SNWBL - Homepage</title>
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <div>
+        <div>
+            <h1 style="margin-bottom: 0; font-size:30px;">{*}SNWBL</h1>
+            <h3 style="margin-top:0; margin-left: 30px;">Practice. Learn. Grow. Teach.</h3>
+        </div>
+        <div>
+            <div class='scrollable'>
+            <% if(session.role === 1 && session.isLoggedIn === true) { %>
+                <% if(projects.length === 0) { %>
+                    <h2>No Open Projects... not as successful as you thought huh?</h2>
+                <% } %>
+                
+                <% for(let i = 0; i < projects.length; i++) { %>
+                    <div>
+                        <p>Author: <%= projects[i].author %></p>
+                        <p>Started On: <%= projects[i].startedOn %> </p>
+                        <% if(projects[i].isFinished === 1){ %>
+                            <p>Finished On: <%= projects[i].finishedOn %> </p>
+                        <% } else {%>
+                            <p>Not FinishedS</p>
+                        <% } %>
+                    </div>
+                    <hr>
+                <% } %>
+                
+                <% } else { %>
+                    <div>
+                        <h4>403 - Access Denied</h4>
+                        <h6>Admin Access Required to Create Projects</h6>
+                    </div>
+            <% } %>  
+            </div>
+            <form action="/users/logout", method="POST", id="logoutForm">
+                <button>Logout</button>
+            </form>
+            <form action='/users/homepage'>
+                <button>Back to homepage!</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

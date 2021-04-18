@@ -84,6 +84,11 @@ usersRouter.get('/homepage', (req, res) =>{
 	res.render('homepage', {session: req.session});
 });
 
+usersRouter.get('/getUsers', (req, res) => {
+	const users = userModel.getUsers();
+	res.render('getAllUsers', {session: req.session, users});
+});
+
 // sends id over route params
 usersRouter.delete('/remove/:userID', (req, res) =>{
 	if(req.session.role !== 1){ // must be a admin
@@ -111,18 +116,17 @@ usersRouter.post('/logout', (req, res) => {
 		}
 		res.redirect('/login.html');
 	})
-    console.log(req.session)
 });
 
 usersRouter.post('/upgrade/:userID', (req, res) => {
-	// if(req.session.role !== 1){
-	// 	return res.sendStatus(404);
-	// }
+	if(req.session.role !== 1){
+		return res.sendStatus(404);
+	}
 	
 	try {
 		const upgraded = userModel.upgradeToAdmin(req.params.userID);
 		if(upgraded){
-			res.sendStatus(200);
+			res.redirect('/users/getUsers');
 		} else {
 			res.sendStatus(500);
 		}
@@ -140,7 +144,7 @@ usersRouter.post('/revoke/:userID', (req, res) => {
 	try {
 		const revoked = userModel.revokeAdmin(req.params.userID);
 		if(revoked){
-			res.sendStatus(200);
+			res.redirect('/users/getUsers');
 		} else {
 			res.sendStatus(500);
 		}
