@@ -17,52 +17,56 @@
             <% } %>
         </div>
         <div>
-            <% if(session.role === 1 && session.isLoggedIn === true) { %>                                                                            
-                <input type=button 
-                onClick="location.href='/projects/create'" 
-                value='Create New Project Idea!'
-                class="options" />
-
-                <input type="button" 
-                onClick="location.href='/projects/getAllProjects'"
-                value="View All Projects"
-                class="options" />
-
-                <input type="button"
-                onClick="location.href='/openProjects/getAllOpenProjects'"
-                value="View All Open Projects"
-                class="options" />
-                
-                <input type="button"
-                onClick="location.href='/users/getUsers'"
-                value="View All Users"
-                class="options" />
-                
-                <% } else { %>
+            <% if(session.isLoggedIn === true){ %>
+                <% if(session.role === 1) { %>                                                                            
                     <input type=button 
-                    onClick="location.href='new.html'" 
-                    value='Generate a New Project!'
+                    onClick="location.href='/projects/create'" 
+                    value='Create New Project Idea!'
                     class="options" />
 
-                    <input type=button 
-                        onClick="location.href='upload.html'" 
-                        value='Upload Your Project'
+                    <input type="button" 
+                    onClick="location.href='/projects/getAllProjects'"
+                    value="View All Projects"
+                    class="options" />
+
+                    <input type="button"
+                    onClick="location.href='/openProjects/getAllOpenProjects'"
+                    value="View All Open Projects"
+                    class="options" />
+                    
+                    <input type="button"
+                    onClick="location.href='/users/getUsers'"
+                    value="View All Users"
+                    class="options" />
+                    
+                    <% } else { %>
+                        <input type=button 
+                        onClick="location.href='new.html'" 
+                        value='Generate a New Project!'
                         class="options" />
 
-                    <input type=button 
-                        onClick="location.href='patch.html'" 
-                        value='Patch Your Project'
-                        class="options" />
+                        <input type=button 
+                            onClick="location.href='upload.html'" 
+                            value='Upload Your Project'
+                            class="options" />
 
-                    <input type=button 
-                        onClick="location.href='view.html'" 
-                        value='View Other Projects'
-                        class="options" />
-            <% } %>  
+                        <input type=button 
+                            onClick="location.href='patch.html'" 
+                            value='Patch Your Project'
+                            class="options" />
 
-            <form action="/users/logout", method="POST", id="logoutForm">
-                <button>Logout</button>
-            </form>
+                        <input type=button 
+                            onClick="location.href='view.html'" 
+                            value='View Other Projects'
+                            class="options" />
+                <% } %>  
+                <form action="/users/logout", method="POST", id="logoutForm">
+                    <button>Logout</button>
+                </form>
+            <% } else {%>
+                <h1>You must be logged in to view this!</h1>
+            <% } %>
+            
         </div>
     </div>
 </body>
