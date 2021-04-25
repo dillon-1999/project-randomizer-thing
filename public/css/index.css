@@ -1,7 +1,9 @@
-body {
-    background: linear-gradient(to bottom, #808080 0%, #1a1a1a 100%) fixed;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+.hello {
+    color: red;
 }
-
 .scrollable {
     margin: 5px;
     padding: 5px;

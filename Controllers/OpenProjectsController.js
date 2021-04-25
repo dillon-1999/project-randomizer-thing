@@ -5,6 +5,7 @@ const openProjectsRouter = express.Router();
 const { openProjectsModel } = require("../Models/OpenProjectModel");
 const { userModel } = require("../Models/UserModel");
 const { projectsModel } = require("../Models/ProjectModel");
+const crypto = require("crypto");
 
 const multer = require('multer');
 
@@ -13,8 +14,11 @@ let storage = multer.diskStorage({
         cb(null, './uploads');
     },
     filename: (req, file, cb) => {
-        cb(null, file.originalname + '-' + Date.now());
+        const randomName = crypto.randomBytes(12).toString('hex');
+        const [extension] = file.originalname.split(".").slice(-1);
+        cb(null, `${randomName}.${extension}`);
     }
+    // we arent filtering. they can upload whatever at this point
 });
 
 let upload = multer({storage});

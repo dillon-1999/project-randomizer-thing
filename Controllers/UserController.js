@@ -26,7 +26,7 @@ usersRouter.post("/", async (req, res) => {
 		});
 	
 		if (userAdded) {
-			res.redirect("/login.html");
+			res.redirect("/login");
 		} else { // something went wrong
 			res.sendStatus(500); // 500 Internal Server Error
 		}
@@ -39,18 +39,20 @@ usersRouter.post("/", async (req, res) => {
 
 usersRouter.post("/login", async (req, res) => {
 	const {value, error} = schemas.loginSchema.validate(req.body, VALIDATION_OPTIONS);
-
     if(error){
+		
         const errorMessages = error.details.map(error => error.message);
-        return res.status(400).json(errorMessages);
+        console.log(errorMessages)
+		return res.status(400).json(errorMessages);
     }
-
+	
     const {email, password} = value;
 
     try {
 		const row = userModel.getPasswordHash(email); 
 
 		if (!row) {
+			
 			return res.sendStatus(400);
 		}
 
@@ -114,7 +116,7 @@ usersRouter.post('/logout', (req, res) => {
 			res.sendStatus(500);
 			return console.error(err);
 		}
-		res.redirect('/login.html');
+		res.redirect('/login');
 	})
 });
 

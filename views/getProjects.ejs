@@ -5,46 +5,58 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{*}SNWBL - Homepage</title>
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/tailwind.css">
 </head>
-<body>
+<body class="bg-gradient-to-r from-gray-500 via-white to-gray-500">
     <div>
-        <div>
-            <h1 style="margin-bottom: 0; font-size:30px;">{*}SNWBL</h1>
-            <h3 style="margin-top:0; margin-left: 30px;">Practice. Learn. Grow. Teach.</h3>
-            <% if(session.role === 1) { %>
-                <h5>ADMIN PAGE</h5>
-            <% } %>
+        <div class="italic text-center">
+            <h1 class="font-bold text-6xl">{*}SNWBL</h1>
+            <h3 class="font-thin text-base">Practice. Learn. Grow. Teach.</h3>
         </div>
         <div>
             <div class='scrollable'>
-            <% if(session.role === 1 && session.isLoggedIn === true) { %>
-                
-                <% for( let i = 0; i < projects.length; i++) { %>
-                    <div>
-                        <p class="name"> Name: <%= projects[i].name %> </p>
-                        <p class="description"> Description: <%= projects[i].description %> </p>
-                        <p class="difficulty"> Difficulty: <%= projects[i].difficulty %> </p>
+                <% if(session.isLoggedIn === true){ %>
+                    <% if(session.role === 1) { %>
+                        
+                        <% for( let i = 0; i < projects.length; i++) { %>
+                            <div>
+                                <p class="name"> Name: <%= projects[i].name %> </p>
+                                <p class="description"> Description: <%= projects[i].description %> </p>
+                                <p class="difficulty"> Difficulty: <%= projects[i].difficulty %> </p>
+                            </div>
+                            <form class="modifyProjectDetails">
+                                <button
+                                class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
+                                >Modify (this doesnt work)</button>
+                            </form>
+                            <hr>
+                        <% } %>
+                        
+                        <% } else { %>
+                            <div>
+                                <h4>403 - Access Denied</h4>
+                                <h6>Admin Access Required to Create Projects</h6>
+                            </div>
+                    <% } %>  
                     </div>
-                    <form class="modifyProjectDetails">
-                        <button>Modify (this doesnt work)</button>
+                    <form action="/users/logout", method="POST", id="logoutForm">
+                        <button
+                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
+                        >Logout</button>
                     </form>
-                    <hr>
-                <% } %>
-                
-                <% } else { %>
-                    <div>
-                        <h4>403 - Access Denied</h4>
-                        <h6>Admin Access Required to Create Projects</h6>
-                    </div>
-            <% } %>  
-            </div>
-            <form action="/users/logout", method="POST", id="logoutForm">
-                <button>Logout</button>
-            </form>
-            <form action='/users/homepage'>
-                <button>Back to homepage!</button>
-            </form>
+                    <form action='/users/homepage'>
+                        <button
+                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
+                        >Back to homepage!</button>
+                    </form>
+            <% } else {%>
+                <h1>You must be logged in to view this!</h1>
+                <form action='/' method="GET">
+                    <button
+                    class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
+                    >Go To Login Page</button>
+                </form>
+            <% } %>
         </div>
     </div>
 </body>
