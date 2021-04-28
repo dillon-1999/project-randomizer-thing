@@ -186,5 +186,5 @@ class UserModel {
         }
     }
 }
-
+let users = new UserModel(db);
 exports.userModel = new UserModel(db);

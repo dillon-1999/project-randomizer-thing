@@ -49,6 +49,22 @@ projectsRouter.get("/getAllProjects", (req, res) =>{
     res.render('getProjects', {session: req.session, projects, success});
 });
 
+projectsRouter.get("/:difficulty", (req, res) =>{
+    // TODO: validate this stuff
+    const {difficulty} = req.params;
+    console.log(difficulty)
+    try
+    {
+        const projects = projectModel.findProjectsByDifficulty(difficulty);
+        return res.json(projects);
+    }
+    catch (err)
+    {
+        console.error(err);
+        return res.sendStatus(500);
+    }
+});
+
 projectsRouter.patch("/updateProject", (req, res) => {
     if(req.session.role !== 1){
         return res.sendStatus(403);

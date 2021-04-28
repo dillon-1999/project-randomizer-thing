@@ -39,25 +39,25 @@
                     value="View All Users"
                     class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
                     
-                    <% } else { %>
-                        <input type=button 
-                        onClick="location.href='new.html'" 
-                        value='Generate a New Project!'
+                <% } else { %>
+                    <input type=button 
+                    onClick="location.href='/openProjects/new'" 
+                    value='Generate a New Project!'
+                    class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
+
+                    <input type=button 
+                        onClick="location.href='/openProjects/upload'" 
+                        value='Upload Your Project'
                         class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
 
-                        <input type=button 
-                            onClick="location.href='/openProjects/upload'"
-                            value='Upload Your Project'
-                            class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
+                    <input type=button 
+                        onClick="location.href='patch.html'" 
+                        value='Patch Your Project'
+                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
 
-                        <input type=button 
-                            onClick="location.href='patch.html'" 
-                            value='Patch Your Project'
-                            class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
-
-                        <input type=button 
-                            onClick="location.href='view.html'" 
-                            value='View Other Projects'
+                    <input type=button 
+                        onClick="location.href='view.html'" 
+                        value='View Other Projects'
                             class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
                 <% } %>  
                 <form action="/users/logout", method="POST", id="logoutForm">

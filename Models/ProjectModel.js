@@ -133,4 +133,6 @@ class ProjectsModel {
     }
 }
 
+let p = new ProjectsModel(db);
+console.log(p.findProjectsByDifficulty(2))
 exports.projectModel = new ProjectsModel(db);
