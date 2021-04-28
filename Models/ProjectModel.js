@@ -132,8 +132,5 @@ class ProjectsModel {
         }
     }
 }
-let p = new ProjectsModel(db);
-// p.createProject({name: "uno", description: "this is uno", difficulty: 3});
-p.deleteProject('b81e6cab-228d-482f-b482-a6ce5f881808');
-console.log(p.getProjects())
+
 exports.projectModel = new ProjectsModel(db);

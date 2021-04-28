@@ -64,6 +64,10 @@ openProjectsRouter.post('/uploadMultiple', upload.array('files', 5), (req, res) 
     }
 });
 
+openProjectsRouter.get('/upload', (req, res) => {
+    res.render('upload', {session: req.session});
+});
+
 openProjectsRouter.get("/getAllOpenProjects", (req, res) => {
     const projects = openProjectsModel.getOpenProjects();
     const success = (projects) ? true : false;

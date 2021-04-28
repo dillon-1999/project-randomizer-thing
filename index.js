@@ -1,5 +1,6 @@
 "use strict";
 
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -10,7 +11,8 @@ let RedisStore = require("connect-redis")(session);
 let redisClient = redis.createClient();
 const sessionConfig = {
     store: new RedisStore({ client: redisClient }),
-    secret: "somethingSecret", // TODO: place somewhere else
+    // TODO ? more like to DID
+    secret: process.env.COOKIE_SECRET, // TODO: place somewhere else
     resave: false,
     saveUninitialized: false,
     name: "session", // now it is just a generic name
