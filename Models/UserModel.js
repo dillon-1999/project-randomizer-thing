@@ -187,6 +187,4 @@ class UserModel {
     }
 }
 let users = new UserModel(db);
-
-console.log(users.getUsers());
 exports.userModel = new UserModel(db);

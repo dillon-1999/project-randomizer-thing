@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{*}SNWBL - Project Generator</title>
+    <link rel="stylesheet" href="/css/tailwind.css">
+
+    <script defer>
+        async function generateProject (difficulty)
+        {
+            try
+            {
+                const response = await fetch(`http://localhost:8005/projects/${difficulty}`);
+                try
+                {
+                    const data = await response.json();
+                    //console.log(data);
+                }
+                catch(err)
+                {
+                    console.log(err);
+                }
+            }
+            catch (err)
+            {
+                document.querySelector('.error').textContent = "Unknown error has occured..";
+            }
+        }
+        window.onload = () => {
+            if(document.getElementById('difficultyForm')){
+                    document.getElementById('difficultyForm').addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    let difficulty = document.getElementById('difficulty').value;
+                    generateProject(difficulty);
+                });
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-r from-gray-500 via-white to-gray-500">
+    <%- include('partials/header.ejs') %>
+    <% if (session.isLoggedIn) {%>
+        <div>
+            <form id="difficultyForm" class="md:w-1/2 mx-auto">
+                <div class="flex space-y-3">
+                    <label for="difficulty" class="w-20 text-right mr-6 m2">Difficulty:</label>
+                    <input id="difficulty" name="name" type="text" class="flex-1" required>
+                </div>
+                <button type="submit"
+                class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded content-center"
+                >Submit</button>
+                <p class="error"></p>
+            </form>
+            
+        </div>
+    <% } else { %>
+        <%- include('partials/accessDenied.ejs') %>
+    <% } %>
+</body>
+</html>

@@ -64,10 +64,20 @@ openProjectsRouter.post('/uploadMultiple', upload.array('files', 5), (req, res) 
     }
 });
 
+// EJS Router Endpoints
 openProjectsRouter.get("/getAllOpenProjects", (req, res) => {
     const projects = openProjectsModel.getOpenProjects();
     const success = (projects) ? true : false;
     res.render("getOpenProjects", {session: req.session, projects, success})
 });
+
+openProjectsRouter.get("/upload", (req, res) => {
+    res.render("upload", {session: req.session})
+});
+
+openProjectsRouter.get("/new", (req, res) => {
+    res.render("new", {session: req.session})
+});
+
 
 module.exports = openProjectsRouter;
