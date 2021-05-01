@@ -57,6 +57,41 @@ async function login (email, password) {
     }
 }
 
+async function newUser(email, password, username) {
+    try {
+        const response = await fetch(`${window.location.origin}/users`, {
+            "method": "POST",
+            "headers": {
+            "Content-Type": "application/json"
+            },
+            "body": JSON.stringify({email, password, username})
+        });
+        if(response.ok){
+            window.location.replace(`${window.location.origin}/login`);
+        } else if(response.status >= 400 && response.status < 500) {
+            document.querySelector('.error').textContent = "Invalid inputs";
+        } 
+    } catch (err) {
+        document.querySelector('.error').textContent = "Server Error..."
+    }
+}
+
+if(document.getElementById('registerForm')){
+    document.getElementById('registerForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        let confirmPassword = document.getElementById('confirmPassword').value;
+        let username = document.getElementById('username').value;
+        if(password === confirmPassword){
+            newUser(email, password, username);
+        } else {
+            document.querySelector('.error').textContent = "Passwords do not match!";
+        }
+        
+    });
+}
+
 if(document.getElementById('loginForm')){
         document.getElementById('loginForm').addEventListener('submit', (event) => {
         event.preventDefault();

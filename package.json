@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "init-db": "sqlite3 ./Database/ProjectRandomizer.db <./Database/schema.sql",
-    "start-dev": "npm run init-db & nodemon index.js & redis-server"
+    "start-dev": "npm run init-db & nodemon index.js & redis-server",
+    "start": "npm run init-db & node index.js & redis-server"
   },
   "author": "Dillon Boatman",
   "license": "ISC",

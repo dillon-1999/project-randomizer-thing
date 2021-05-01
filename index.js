@@ -52,7 +52,7 @@ app.get('/register', (req, res) => {
     res.render('register')
 });
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT, () => {
         const BLUE = "\u001b[34;1m";
 	const GREEN = "\u001b[32;1m";
 	const RESET = "\u001b[0m";
