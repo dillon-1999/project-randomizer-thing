@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{*}SNWBL - Homepage</title>
     <link rel="stylesheet" type="text/css" href="/css/tailwind.css">
+    <script src="/js/listeners.js" defer></script>
 </head>
 <body class="bg-gradient-to-r from-gray-500 via-white to-gray-500">
     <div >
@@ -19,46 +20,48 @@
         <div class="flex justify-center">
             <% if(session.isLoggedIn === true){ %>
                 <% if(session.role === 1) { %>                                                                            
-                    <input type=button 
-                    onClick="location.href='/projects/create'" 
+                    <input type="button" 
+                    id="newProjectAdmin"
                     value='Create New Project Idea!'
                     class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
 
-                    <input type="button" 
-                    onClick="location.href='/projects/getAllProjects'"
+                    <input type="button"
+                    id="viewProjects"
                     value="View All Projects"
                     class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
 
                     <input type="button"
-                    onClick="location.href='/openProjects/getAllOpenProjects'"
+                    id="viewOpenProjects"
                     value="View All Open Projects"
                     class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
                     
                     <input type="button"
-                    onClick="location.href='/users/getUsers'"
+                    id="viewUsers"
                     value="View All Users"
                     class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
                     
                 <% } else { %>
                     <input type=button 
-                    onClick="location.href='/openProjects/new'" 
+                    id="newProjectUser"
                     value='Generate a New Project!'
                     class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
 
                     <input type=button 
-                        onClick="location.href='/openProjects/upload'" 
+                        id="uploadProject"
                         value='Upload Your Project'
                         class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
 
                     <input type=button 
+                        id="patchProject"
                         onClick="location.href='patch.html'" 
                         value='Patch Your Project'
                         class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
 
                     <input type=button 
+                        id="viewProjects"
                         onClick="location.href='view.html'" 
                         value='View Other Projects'
-                            class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
+                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
                 <% } %>  
                 <form action="/users/logout", method="POST", id="logoutForm">
                     <button
