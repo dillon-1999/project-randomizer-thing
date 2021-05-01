@@ -6,37 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{*}SNWBL - Create Project</title>
     <link rel="stylesheet" href="/css/tailwind.css">
-    <script defer>
-        async function newProject (name, description, difficulty) {
-            try {
-                const response = await fetch("http://localhost:8005/projects/create", {
-                    "method": "POST",
-                    "headers": {
-                    "Content-Type": "application/json"
-                    },
-                    "body": JSON.stringify({name, description, difficulty})
-                });
-                if(response.ok){
-                    window.location.replace("http://localhost:8005/users/homepage");
-                } else if(response.status >= 400 && response.status < 500) {
-                    document.querySelector('.error').textContent = "Invalid inputs. Possibilities: Name taken, Difficulty not (1-5)";
-                } 
-            } catch (err) {
-                document.querySelector('.error').textContent = "Server Error..."
-            }
-        }
-        window.onload = () => {
-                if(document.getElementById('createForm')){
-                    document.getElementById('createForm').addEventListener('submit', (event) => {
-                        event.preventDefault();
-                        console.log("here")
-                        let name = document.getElementById('proj_name').value;
-                        let description = document.getElementById('proj_desc').value;
-                        let difficulty = document.getElementById('difficulty').value;
-                        newProject(name, description, difficulty);
-                    });
-                }
-        };
+    <script src="/js/helper.js" defer>
+       
     </script>
 </head>
 <body class="bg-gradient-to-r from-gray-500 via-white to-gray-500">
@@ -66,7 +37,6 @@
                 >Submit</button>
                 <p class="error"></p>
             </form>
-            
         </div>
         <form action='/users/homepage'>
             <button

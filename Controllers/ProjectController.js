@@ -52,10 +52,10 @@ projectsRouter.get("/getAllProjects", (req, res) =>{
 projectsRouter.get("/:difficulty", (req, res) =>{
     // TODO: validate this stuff
     const {difficulty} = req.params;
-    console.log(difficulty)
     try
     {
-        const projects = projectModel.findProjectsByDifficulty(difficulty);
+        const projects = projectModel.findProjectsByDifficulty(parseInt(difficulty));
+        console.log(projects)
         return res.json(projects);
     }
     catch (err)

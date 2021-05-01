@@ -1,3 +1,42 @@
+async function generateProject (difficulty)
+{
+    try
+    {
+        const response = await fetch(`http://localhost:8005/projects/${difficulty}`);
+        try
+        {
+            const data = await response.json();
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    }
+    catch (err)
+    {
+        document.querySelector('.error').textContent = "Unknown error has occured..";
+    }
+}
+
+async function newProject (name, description, difficulty) {
+    try {
+        const response = await fetch("http://localhost:8005/projects/create", {
+            "method": "POST",
+            "headers": {
+            "Content-Type": "application/json"
+            },
+            "body": JSON.stringify({name, description, difficulty})
+        });
+        if(response.ok){
+            window.location.replace("http://localhost:8005/users/homepage");
+        } else if(response.status >= 400 && response.status < 500) {
+            document.querySelector('.error').textContent = "Invalid inputs. Possibilities: Name taken, Difficulty not (1-5)";
+        } 
+    } catch (err) {
+        document.querySelector('.error').textContent = "Server Error..."
+    }
+}
+
 async function login (email, password) {
     try {
         const response = await fetch("http://localhost:8005/users/login", {
@@ -7,6 +46,7 @@ async function login (email, password) {
             },
             "body": JSON.stringify({email, password})
         });
+        console.log(response)
         if(response.redirected){
             window.location.replace(response.url);
         } else if(response.status >= 400 && response.status < 500) {
@@ -17,10 +57,31 @@ async function login (email, password) {
     }
 }
 
-document.getElementById('loginForm').addEventListener('submit', (event) => {
-    event.preventDefault();
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
-    login(email, password);
-});
+if(document.getElementById('loginForm')){
+        document.getElementById('loginForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        login(email, password);
+    });
+}
 
+
+if(document.getElementById('createForm')){
+    document.getElementById('createForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        console.log("here")
+        let name = document.getElementById('proj_name').value;
+        let description = document.getElementById('proj_desc').value;
+        let difficulty = document.getElementById('difficulty').value;
+        newProject(name, description, difficulty);
+    });
+}
+
+if(document.getElementById('difficultyForm')){
+        document.getElementById('difficultyForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        let difficulty = document.getElementById('difficulty').value;
+        generateProject(difficulty);
+    });
+}
