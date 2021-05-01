@@ -75,8 +75,11 @@ if(document.getElementById('createForm')){
         let description = document.getElementById('proj_desc').value;
         let difficulty = document.getElementById('difficulty').value;
         newProject(name, description, difficulty);
-    });if(document.getElementById('difficultyForm')){
-        document.getElementById('difficultyForm').addEventListener('submit', (event) => {
+    });
+}
+    
+if(document.getElementById('difficultyForm')){
+    document.getElementById('difficultyForm').addEventListener('submit', (event) => {
         event.preventDefault();
         let difficulty = document.getElementById('difficulty').value;
         generateProject(difficulty);
