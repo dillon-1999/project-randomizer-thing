@@ -2,7 +2,7 @@ async function generateProject (difficulty)
 {
     try
     {
-        const response = await fetch(`http://localhost:8005/projects/${difficulty}`);
+        const response = await fetch(`${window.location.origin}/projects/${difficulty}`);
         try
         {
             const data = await response.json();
@@ -20,7 +20,7 @@ async function generateProject (difficulty)
 
 async function newProject (name, description, difficulty) {
     try {
-        const response = await fetch("http://localhost:8005/projects/create", {
+        const response = await fetch(`${window.location.origin}/projects/create`, {
             "method": "POST",
             "headers": {
             "Content-Type": "application/json"
@@ -28,7 +28,7 @@ async function newProject (name, description, difficulty) {
             "body": JSON.stringify({name, description, difficulty})
         });
         if(response.ok){
-            window.location.replace("http://localhost:8005/users/homepage");
+            window.location.replace(`${window.location.origin}/users/homepage`);
         } else if(response.status >= 400 && response.status < 500) {
             document.querySelector('.error').textContent = "Invalid inputs. Possibilities: Name taken, Difficulty not (1-5)";
         } 
@@ -39,7 +39,7 @@ async function newProject (name, description, difficulty) {
 
 async function login (email, password) {
     try {
-        const response = await fetch("http://localhost:8005/users/login", {
+        const response = await fetch(`${window.location.origin}/users/login`, {
             "method": "POST",
             "headers": {
             "Content-Type": "application/json"
@@ -75,10 +75,7 @@ if(document.getElementById('createForm')){
         let description = document.getElementById('proj_desc').value;
         let difficulty = document.getElementById('difficulty').value;
         newProject(name, description, difficulty);
-    });
-}
-
-if(document.getElementById('difficultyForm')){
+    });if(document.getElementById('difficultyForm')){
         document.getElementById('difficultyForm').addEventListener('submit', (event) => {
         event.preventDefault();
         let difficulty = document.getElementById('difficulty').value;

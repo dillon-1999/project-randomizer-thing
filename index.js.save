@@ -3,6 +3,11 @@
 require("dotenv").config();
 const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === "development";
 const isProduction = process.env.NODE_ENV === "production";
+if(isProduction){
+	app.set('trust proxy', 1);
+	app.use(require('helmet')());
+}
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -19,7 +24,9 @@ const sessionConfig = {
     saveUninitialized: false,
     name: "session", // now it is just a generic name
     cookie: {
-      httpOnly: true,
+     	sameSite: isProduction,
+    	secure: isProduction,
+	httpOnly: true,
       maxAge: 1000 * 60 * 8 // 8 hours
     }
 };
@@ -52,9 +59,11 @@ app.get('/register', (req, res) => {
     res.render('register')
 });
 
-app.listen(PORT, () => {
-        const BLUE = "\u001b[34;1m";
-	const GREEN = "\u001b[32;1m";
+app.listen(process.env.PORT, () => {
+    const BLUE = "\u001b[34;1m";
+    
+});
+const GREEN = "\u001b[32;1m";
 	const RESET = "\u001b[0m";
 	
 	// Default to development mode
@@ -64,4 +73,3 @@ app.listen(PORT, () => {
 	mode = `${color}${mode}${RESET}`;
 	
 	console.log(`Server is listenting on http://localhost:${process.env.PORT} in ${mode} mode`);
-});
