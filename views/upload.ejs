@@ -5,17 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{*}SNWBL - Upload Project</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="/css/tailwind.css">
 </head>
-<body>
+<body class="bg-gradient-to-r from-gray-500 via-white to-gray-500">
     <div>
-        <h1 style="margin-bottom: 0; font-size:80px;">{*}SNWBL</h1>
-        <h3 style="margin-top:0; margin-left: 105px;">Practice. Learn. Grow. Teach.</h3>
+        <h1 class="font-bold text-6xl">{*}SNWBL</h1>
+        <h3 class="font-thin text-base">Practice. Learn. Grow. Teach.</h3>
     </div>
     <div>
-        <form action="/openProjects/uploadMultiple" enctype="multipart/form-data" method="POST">
-            <input type="file" name="files" multiple/>
-            <input type="submit" value='upload your code!' />
+        <form action="/openProjects/uploadSingle" enctype="multipart/form-data" method="POST">
+            <input type="file" name="file" />
+            <input type="submit" value='upload your code!' 
+            class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded content-center"/>
         </form>
     </div>
     <div>

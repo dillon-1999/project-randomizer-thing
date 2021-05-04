@@ -26,13 +26,6 @@ if(document.getElementById('viewUsers')){
     });
 }
 
-if(document.getElementById('viewUsers')){
-    document.getElementById('viewUsers').addEventListener('click', (event) => {
-        event.preventDefault();
-        window.location.replace(`${window.location.origin}/users/getUsers`);
-    });
-}
-
 if(document.getElementById('newProjectUser')){
     document.getElementById('newProjectUser').addEventListener('click', (event) => {
         event.preventDefault();
@@ -40,9 +33,10 @@ if(document.getElementById('newProjectUser')){
     });
 }
 
-if(document.getElementById('uploadProject')){
-    document.getElementById('uploadProject').addEventListener('click', (event) => {
+//id="viewUsersProjects"
+if(document.getElementById('viewUsersProjects')){
+    document.getElementById('viewUsersProjects').addEventListener('click', (event) => {
         event.preventDefault();
-        window.location.replace(`${window.location.origin}/openProjects/upload`);
+        window.location.replace(`${window.location.origin}/openProjects/usersOpenProjects`);
     });
 }

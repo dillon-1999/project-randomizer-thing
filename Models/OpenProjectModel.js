@@ -30,18 +30,22 @@ class OpenProjectsModel {
         }
     }
 
-    // uploadSingleFile(fileHash, project){
-    //     try {
-    //         const sql = `UPDATE OpenProjects
-    //                      SET fileHash
-    //                      WHERE
-    //                      project = @projectID`;
-    //         return db.prepare(sql).run({fileHash, project});
-    //     } catch (err){
-    //         console.error(err);
-    //         return false;
-    //     }
-    // }
+    uploadSingleFile(fileHash, project){
+        try {
+            const sql = `UPDATE OpenProjects
+                         SET 
+                         fileHash = @filehash
+                         finishedOn = @finishedOn
+                         isFinished = 1
+                         WHERE
+                         project = @projectID`;
+            const finishedOn = Date.now();
+            return db.prepare(sql).run({fileHash, finishedOn, project});
+        } catch (err){
+            console.error(err);
+            return false;
+        }
+    }
 
     findProjectsByUser (userID)
     {
@@ -136,4 +140,11 @@ class OpenProjectsModel {
     }
 }
 
+const openProjects = new OpenProjectsModel(db);
+// const proj = {
+//     project: 'a2196aed-3466-44ed-9cab-a046adfed0ea',
+//     author: '5f2007ca-a9a6-4d62-b7f1-6f2eee076e3c'
+// }
+// openProjects.createOpenProject(proj)
+console.log()
 exports.openProjectsModel = new OpenProjectsModel(db);

@@ -4,7 +4,7 @@ const express = require("express");
 const openProjectsRouter = express.Router();
 const { openProjectsModel } = require("../Models/OpenProjectModel");
 const { userModel } = require("../Models/UserModel");
-const { projectsModel } = require("../Models/ProjectModel");
+const { projectModel } = require("../Models/ProjectModel");
 const crypto = require("crypto");
 
 const multer = require('multer');
@@ -24,14 +24,18 @@ let storage = multer.diskStorage({
 let upload = multer({storage});
 
 // userID: route param
-// openProjectsRouter.post('/uploadSingle', upload.single('file'), (req, res) => {
-//     try{
-//         console.log(req.file)
-//         res.send("Single File Upload Sucess")
-//     } catch(err){
-//         res.send(err);
-//     }
-// });
+openProjectsRouter.post('/uploadSingle/:openID', upload.single('file'), (req, res) => {
+    try{
+        const didUpload = openProjectsModel.uploadSingleFile(req.file.filename, req.params.openID);
+        if(didUpload){
+            return res.sendStatus(200);
+        } else {
+            return res.sendStatus(400);
+        }
+    } catch(err){
+        res.send(err);
+    }
+});
 
 
 // idk, send the userID and projectID via query
@@ -55,14 +59,14 @@ openProjectsRouter.post('/openProject', (req, res) => {
 });
 
 
-openProjectsRouter.post('/uploadMultiple', upload.array('files', 5), (req, res) => {
-    try{
-        console.log(req.files)
-        res.send("File Upload Sucess")
-    } catch(err){
-        res.send(err);
-    }
-});
+// openProjectsRouter.post('/uploadMultiple', upload.array('files', 5), (req, res) => {
+//     try{
+//         console.log(req.files)
+//         res.send("File Upload Sucess")
+//     } catch(err){
+//         res.send(err);
+//     }
+// });
 
 // EJS Router Endpoints
 openProjectsRouter.get("/getAllOpenProjects", (req, res) => {
@@ -79,5 +83,17 @@ openProjectsRouter.get("/new", (req, res) => {
     res.render("new", {session: req.session})
 });
 
+openProjectsRouter.get("/usersOpenProjects", (req, res) => {
+    console.log(req.session.userID);
+    const projects = openProjectsModel.findProjectsByUser(req.session.userID);
+    for(let i = 0; i < projects.length; i++){
+        // console.log(projects[i].project)
+        let project = projectModel.findProjectByProjectID(projects[i].project);
+        projects[i].name = project.name;
+        projects[i].difficulty = project.difficulty;
+        projects[i].description = project.description;
+    }
+    res.render("usersOpenProjects", {session: req.session, projects});
+})
 
 module.exports = openProjectsRouter;

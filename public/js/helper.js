@@ -113,10 +113,10 @@ if(document.getElementById('createForm')){
     });
 }
     
-if(document.getElementById('difficultyForm')){
-    document.getElementById('difficultyForm').addEventListener('submit', (event) => {
+if(document.getElementById('uploadButton')){
+    document.getElementById('uploadButton').addEventListener('click', (event) => {
         event.preventDefault();
-        let difficulty = document.getElementById('difficulty').value;
-        generateProject(difficulty);
+        console.log("clicked")
     });
 }
+

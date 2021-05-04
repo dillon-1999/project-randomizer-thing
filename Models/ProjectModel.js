@@ -42,17 +42,17 @@ class ProjectsModel {
         }
     }
 
-    findProjectByProductID (productID)
+    findProjectByProjectID (projectID)
     {
         try
         {
             const sql = `
                 SELECT *
                 FROM Projects
-                WHERE productID = @productID`;
+                WHERE projectID = @projectID`;
             const stmt = db.prepare(sql);
         
-            return stmt.all({productID});
+            return stmt.get({projectID});
         }
         catch (err)
         {
