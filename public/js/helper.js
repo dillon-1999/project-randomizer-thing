@@ -6,6 +6,9 @@ async function generateProject (difficulty)
         try
         {
             const data = await response.json();
+            console.log(data);
+            let projectIndex = Math.floor(Math.random() * data.length);
+            return data[projectIndex];
         }
         catch(err)
         {
@@ -15,6 +18,7 @@ async function generateProject (difficulty)
     catch (err)
     {
         document.querySelector('.error').textContent = "Unknown error has occured..";
+        console.log(err);
     }
 }
 
@@ -105,7 +109,7 @@ if(document.getElementById('loginForm')){
 if(document.getElementById('createForm')){
     document.getElementById('createForm').addEventListener('submit', (event) => {
         event.preventDefault();
-        console.log("here")
+        //console.log("here")
         let name = document.getElementById('proj_name').value;
         let description = document.getElementById('proj_desc').value;
         let difficulty = document.getElementById('difficulty').value;
@@ -120,3 +124,27 @@ if(document.getElementById('uploadButton')){
     });
 }
 
+
+if(document.getElementById('difficultyForm')){
+    document.getElementById('difficultyForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        let difficulty = document.getElementById('difficulty').value;
+        const project = await generateProject(difficulty);
+
+        console.log(project);
+        console.log(difficulty);
+
+        document.querySelector('#projectName').textContent = `Name: ${project.name}`;
+        document.querySelector('#projectDesc').textContent = `Description: ${project.description}`;
+        document.querySelector('#projDiff').textContent = `Difficulty: ${project.difficulty}`;
+
+        //document.querySelector(".projectOffer");
+        let newButton = document.createElement('button');
+        newButton.textContent = 'Accept Project';
+        newButton.addEventListener('click', (event) => {
+            console.log('Accepted Project')
+        });
+        document.querySelector('#projectOffer').append(newButton);
+
+    });
+}
