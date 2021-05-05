@@ -80,6 +80,26 @@ async function newUser(email, password, username) {
     }
 }
 
+async function openNewProject(project) {
+    try
+    {
+        const response = await fetch(`${window.location.origin}/openProjects/openProject`, {
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": JSON.stringify({project})
+        });
+        if(response.ok){
+            window.location.replace(`${window.location.origin}/openProjects/usersOpenProjects`);
+        } else if(response.status >= 400 && response.status < 500) {
+            console.log(response.status);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 if(document.getElementById('registerForm')){
     document.getElementById('registerForm').addEventListener('submit', (event) => {
         event.preventDefault();
@@ -141,8 +161,10 @@ if(document.getElementById('difficultyForm')){
         //document.querySelector(".projectOffer");
         let newButton = document.createElement('button');
         newButton.textContent = 'Accept Project';
+        newButton.className =  "bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded content-center align-middle"
         newButton.addEventListener('click', (event) => {
-            console.log('Accepted Project')
+            console.log('Accepted Project');
+            openNewProject(project.projectID);
         });
         document.querySelector('#projectOffer').append(newButton);
 

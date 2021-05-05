@@ -44,7 +44,8 @@ openProjectsRouter.post('/openProject', (req, res) => {
     if(!req.session.isLoggedIn){
         return res.sendStatus(403);
     }
-    const {project, author} = req.query;
+    const {project} = req.body;
+    const author = req.session.userID;
     try{
         const didOpen = openProjectsModel.createOpenProject({project, author});
         if(didOpen){
