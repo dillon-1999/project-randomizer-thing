@@ -9,10 +9,7 @@
 </head>
 <body class="bg-gradient-to-r from-gray-500 via-white to-gray-500">
     <div>
-        <div class="italic text-center">
-            <h1 class="font-bold text-6xl">{*}SNWBL</h1>
-            <h3 class="font-thin text-base">Practice. Learn. Grow. Teach.</h3>
-        </div>
+        <%- include('partials/header.ejs') %>
         <div>
             <div class='scrollable'>
                 <% if(session.isLoggedIn === true){ %>
