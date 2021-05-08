@@ -21,9 +21,9 @@
                         <% for(let i = 0; i < projects.length; i++) { %>
                             <div>
                                 <p>Author: <%= projects[i].author %></p>
-                                <p>Started On: <%= projects[i].startedOn %> </p>
+                                <p>Started On: <%= Date(projects[i].startedOn) %> </p>
                                 <% if(projects[i].isFinished === 1){ %>
-                                    <p>Finished On: <%= projects[i].finishedOn %> </p>
+                                    <p>Finished On: <%= Date(projects[i].finishedOn) %> </p>
                                 <% } else {%>
                                     <p>Not Finished</p>
                                 <% } %>
