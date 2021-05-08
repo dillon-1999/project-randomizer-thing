@@ -40,3 +40,11 @@ if(document.getElementById('viewUsersProjects')){
         window.location.replace(`${window.location.origin}/openProjects/usersOpenProjects`);
     });
 }
+
+//id="viewAllProjects"
+if(document.getElementById('viewAllProjects')){
+    document.getElementById('viewAllProjects').addEventListener('click', (event) => {
+        event.preventDefault();
+        window.location.replace(`${window.location.origin}/openProjects/viewAllProjects`);
+    });
+}

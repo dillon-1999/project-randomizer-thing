@@ -70,6 +70,7 @@ openProjectsRouter.post('/openProject', (req, res) => {
 // });
 
 // EJS Router Endpoints
+//Finds all User Projects for Admins
 openProjectsRouter.get("/getAllOpenProjects", (req, res) => {
     const projects = openProjectsModel.getOpenProjects();
     const success = (projects) ? true : false;
@@ -84,6 +85,7 @@ openProjectsRouter.get("/new", (req, res) => {
     res.render("new", {session: req.session})
 });
 
+//Find Projects specific to that user
 openProjectsRouter.get("/usersOpenProjects", (req, res) => {
     console.log(req.session.userID);
     const projects = openProjectsModel.findProjectsByUser(req.session.userID);
@@ -95,6 +97,18 @@ openProjectsRouter.get("/usersOpenProjects", (req, res) => {
         projects[i].description = project.description;
     }
     res.render("usersOpenProjects", {session: req.session, projects});
-})
+});
+
+//Find ALL Projects for Users
+openProjectsRouter.get("/viewAllProjects", (req, res) => {
+    let projects = openProjectsModel.getOpenProjects();
+    for(let i = 0; i < projects.length; i++)
+    {
+        let { username } = userModel.getUserNameByID(projects[i].author);
+        projects[i].author = username;
+    }
+
+    res.render("viewAllProjects", {session: req.session, projects})
+});
 
 module.exports = openProjectsRouter;
