@@ -100,6 +100,37 @@ async function openNewProject(project) {
     }
 }
 
+async function uploadFile(openID){
+    try{
+        console.log("in func")
+        let form = document.getElementById('uploadForm');
+        let formData = new FormData(form);
+        const response = await fetch(`${window.location.origin}/openProjects/uploadSingle/${openID}`, {
+            "method": "POST",
+            "body": formData
+        });
+        if(response.ok){
+            console.log('upload success');
+            window.location.replace(`${window.location.origin}/openProjects/usersOpenProjects`);
+        } else {
+            document.querySelector('.error').textContent = "An error has occurred...";
+        }
+    } catch(err) {
+        console.error(err)
+    }
+}
+
+if(document.getElementById('submitCode')){
+    document.getElementById('submitCode').addEventListener('click', (event) => {
+        event.preventDefault();
+        if(uploadFile(document.getElementById('submitCode').value)){
+            console.log("Yooooo");
+        } else {
+            console.log("nooooo")
+        }
+    })
+}
+
 if(document.getElementById('registerForm')){
     document.getElementById('registerForm').addEventListener('submit', (event) => {
         event.preventDefault();
@@ -136,14 +167,6 @@ if(document.getElementById('createForm')){
         newProject(name, description, difficulty);
     });
 }
-    
-if(document.getElementById('uploadButton')){
-    document.getElementById('uploadButton').addEventListener('click', (event) => {
-        event.preventDefault();
-        console.log("clicked")
-    });
-}
-
 
 if(document.getElementById('difficultyForm')){
     document.getElementById('difficultyForm').addEventListener('submit', async (event) => {

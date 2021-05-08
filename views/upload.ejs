@@ -6,19 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{*}SNWBL - Upload Project</title>
     <link rel="stylesheet" href="/css/tailwind.css">
+    <script src="/js/helper.js" defer></script>
 </head>
 <body class="bg-gradient-to-r from-gray-500 via-white to-gray-500">
     <%- include('partials/header.ejs') %>
     <div>
-        <form action="/openProjects/uploadSingle" enctype="multipart/form-data" method="POST">
-            <input type="file" name="file" />
-            <input type="submit" value='upload your code!' 
-            class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded content-center"/>
-        </form>
-    </div>
-    <div>
-        <h3>504 - Not Implimented</h3>
-        <p>In the future, this will redirect you to your project's page.</p>
+        <% if(session.isLoggedIn === true) { %>
+            <% if(session.userID === author) { %>
+                <form id='uploadForm'>
+                    <input type="file" name="file" />
+                    <button 
+                    id='submitCode'
+                    type="submit"
+                    value="<%= openID %>"
+                    class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded content-center"
+                    >Upload your code!</button>
+                </form>
+                <p class="error"></p>
+             <% } else { %>
+                <h1>You aren't allowed to upload to a project that isnt yours!</h1>
+                <form action='/users/homepage'>
+                    <button
+                    class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
+                    >Back to homepage!</button>
+                </form>
+           <% } %>
+            
+        <% } else { %>
+            <h1>You Must be logged in to view this!</h1>
+            <form action='/' method="GET">
+                <button
+                class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
+                >Go To Login Page</button>
+            </form>
+        <% } %>
     </div>
 </body>
 </html>

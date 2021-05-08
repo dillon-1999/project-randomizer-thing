@@ -1,13 +1,3 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-.hello {
-    color: red;
-}
-.scrollable {
-    margin: 5px;
-    padding: 5px;
-    font-size: 1vw;
-    overflow: auto;
-    text-align: justify;
-}
