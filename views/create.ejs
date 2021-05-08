@@ -13,49 +13,35 @@
     <% console.log(session) %>
     <% if(session.isLoggedIn === true){ %>
         <% if (session.role === 1) { %>
-        <div>
-            <form id="createForm" class="md:w-1/2 mx-auto">
-                <div class="flex space-y-3">
-                    <label for="proj_name" class="w-20 text-right mr-6 m2">Project Name:</label>
-                    <input id="proj_name" name="name" type="text" class="flex-1" required>
-                </div>
-                <div class="flex space-y-3">
-                    <label for="proj_desc" class="w-20 text-right mr-6 m2">Description:</label>
-                    <input id="proj_desc" name="description" type="text" class="flex-1" required>
-                </div>
-                <div class="flex space-y-3">
-                    <label for="difficulty" class="w-20 text-right mr-6 m2">Difficulty:</label>
-                    <input id="difficulty" name="difficulty" type="number" class="flex-1" required>
-                </div>
-                <button type="submit"
-                class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded content-center"
-                >Submit</button>
-                <p class="error"></p>
-            </form>
-        </div>
-        <form action='/users/homepage'>
-            <button
-            class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
-            >Back to homepage!</button>
-        </form>
-        <form action="/users/logout", method="POST", id="logoutForm">
-            <button
-            class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
-            >Logout</button>
-        </form>
+            <div>
+                <form id="createForm" class="md:w-1/2 mx-auto">
+                    <div class="flex space-y-3">
+                        <label for="proj_name" class="w-20 text-right mr-6 m2">Project Name:</label>
+                        <input id="proj_name" name="name" type="text" class="flex-1" required>
+                    </div>
+                    <div class="flex space-y-3">
+                        <label for="proj_desc" class="w-20 text-right mr-6 m2">Description:</label>
+                        <input id="proj_desc" name="description" type="text" class="flex-1" required>
+                    </div>
+                    <div class="flex space-y-3">
+                        <label for="difficulty" class="w-20 text-right mr-6 m2">Difficulty:</label>
+                        <input id="difficulty" name="difficulty" type="number" class="flex-1" required>
+                    </div>
+                    <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded content-center"
+                    >Submit</button>
+                    <p class="error"></p>
+                </form>
+            </div>
+            <%- include('partials/footer.ejs') %>
         <% } else { %>
-        <div>
-            <h4>403 - Access Denied</h4>
-            <h6>Admin Access Required to Create Projects</h6>
-        </div>
+            <div>
+                <h4>403 - Access Denied</h4>
+                <h6>Admin Access Required to Create Projects</h6>
+            </div>
         <% } %>
     <% } else {%>
-        <h1>You must be logged in to view this!</h1>
-        <form action='/' method="GET">
-            <button id='loginPage'
-            class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
-            >Go To Login Page</button>
-        </form>
+        <%- include('partials/accessDenied.ejs') %>
     <% } %>
     
 </body>

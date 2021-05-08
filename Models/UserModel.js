@@ -154,6 +154,20 @@ class UserModel {
         }
     }
 
+    getUserNameByID (userID) {
+        try {
+            const sql = `SELECT username
+                         FROM Users
+                         Where userID = @userID
+            `;
+            const stmt = db.prepare(sql);
+            return stmt.get({userID});
+        } catch (err) {
+            console.error(err);
+            return false;
+        }
+    }
+
     getUserDataByEmail(email){
         try {
             const sql = `

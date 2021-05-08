@@ -22,7 +22,7 @@
                         <% for(let i = 0; i < projects.length; i++) { %>
                             <div>
                                 <p>Author: <%= projects[i].author %></p>
-                                <p>Started On: <%= projects[i].startedOn %> </p>
+                                <p>Started On: <%= Date(projects[i].startedOn) %> </p>
                                 <% if(projects[i].isFinished === 1){ %>
                                     <p>Finished On: <%= projects[i].finishedOn %> </p>
                                     <p>Filename: <%= projects[i].fileName %> </p>
@@ -40,23 +40,9 @@
                             </div>
                     <% } %>  
                     </div>
-                    <form action="/users/logout", method="POST", id="logoutForm">
-                        <button
-                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
-                        >Logout</button>
-                    </form>
-                    <form action='/users/homepage'>
-                        <button
-                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
-                        >Back to homepage!</button>
-                    </form>
+                    <%- include('partials/footer.ejs') %>
                 <% } else {%>
-                    <h1>You must be logged in to view this!</h1>
-                    <form action='/' method="GET">
-                        <button
-                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
-                        >Go To Login Page</button>
-                    </form>
+                    <%- include('partials/accessDenied.ejs') %>
                 <% } %>
         </div>
     </div>

@@ -21,34 +21,39 @@
             <% if(session.isLoggedIn === true){ %>
                 <% if(session.role === 1) { %>                                                                            
                     <input type="button" 
-                    id="newProjectAdmin"
-                    value='Create New Project Idea!'
-                    class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
+                        id="newProjectAdmin"
+                        value='Create New Project Idea!'
+                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
 
                     <input type="button"
-                    id="viewProjects"
-                    value="View All Projects"
-                    class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
+                        id="viewProjects"
+                        value="View All Projects"
+                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
 
                     <input type="button"
-                    id="viewOpenProjects"
-                    value="View All Open Projects"
-                    class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
+                        id="viewOpenProjects"
+                        value="View All Open Projects"
+                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
                     
                     <input type="button"
-                    id="viewUsers"
-                    value="View All Users"
-                    class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
+                        id="viewUsers"
+                        value="View All Users"
+                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
                     
                 <% } else { %>
                     <input type=button 
-                    id="newProjectUser"
-                    value='Generate a New Project!'
-                    class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
+                        id="newProjectUser"
+                        value='Generate a New Project!'
+                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
 
                     <input type=button 
                         id="viewUsersProjects"
-                        value='View Open Projects'
+                        value='View Your Open Projects'
+                        class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
+
+                    <input type=button 
+                        id="viewAllProjects"
+                        value='View Users Projects'
                         class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded" />
                 <% } %>  
                 <form action="/users/logout", method="POST", id="logoutForm">
@@ -57,12 +62,7 @@
                     >Logout</button>
                 </form>
             <% } else {%>
-                <h1>You must be logged in to view this!</h1>
-                <form action='/' method="GET">
-                    <button
-                    class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
-                    >Go To Login Page</button>
-                </form>
+                <%- include('partials/accessDenied.ejs') %>
             <% } %>
             
         </div>

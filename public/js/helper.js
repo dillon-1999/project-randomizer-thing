@@ -1,3 +1,8 @@
+// -----FUNCTIONS-----
+
+//Purpose: Generates A Project for the user
+//Link Used: /openProjects/new
+//Param: difficulty (int)
 async function generateProject (difficulty)
 {
     try
@@ -22,6 +27,9 @@ async function generateProject (difficulty)
     }
 }
 
+//Purpose: Creates A New Project (admin only)
+//Link Used: /projects/create 
+//Param: name (string), description (string), difficulty(int)
 async function newProject (name, description, difficulty) {
     try {
         const response = await fetch(`${window.location.origin}/projects/create`, {
@@ -41,6 +49,9 @@ async function newProject (name, description, difficulty) {
     }
 }
 
+//Purpose: Logs the user in
+//Link Used: /login 
+//Param: email (string), password (string)
 async function login (email, password) {
     try {
         const response = await fetch(`${window.location.origin}/users/login`, {
@@ -61,6 +72,9 @@ async function login (email, password) {
     }
 }
 
+//Purpose: Registers a new user
+//Link Used: /register
+//Param: email (string), password (string), username(int)
 async function newUser(email, password, username) {
     try {
         const response = await fetch(`${window.location.origin}/users`, {
@@ -80,6 +94,9 @@ async function newUser(email, password, username) {
     }
 }
 
+//Purpose: Opens a new Project (for users)
+//Link Used: /openProjects/new 
+//Param: project (string (projectID))
 async function openNewProject(project) {
     try
     {
@@ -147,6 +164,8 @@ if(document.getElementById('registerForm')){
     });
 }
 
+//Purpose: Logs in a user
+//Used at: /login
 if(document.getElementById('loginForm')){
         document.getElementById('loginForm').addEventListener('submit', (event) => {
         event.preventDefault();
@@ -156,7 +175,8 @@ if(document.getElementById('loginForm')){
     });
 }
 
-
+//Purpose: Creates a project (admin only)
+//Used at: /projects/create
 if(document.getElementById('createForm')){
     document.getElementById('createForm').addEventListener('submit', (event) => {
         event.preventDefault();
