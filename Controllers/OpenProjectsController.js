@@ -5,6 +5,7 @@ const openProjectsRouter = express.Router();
 const { openProjectsModel } = require("../Models/OpenProjectModel");
 const { userModel } = require("../Models/UserModel");
 const { projectModel } = require("../Models/ProjectModel");
+const { commentModel } = require("../Models/CommentModel");
 const crypto = require("crypto");
 
 const multer = require('multer');
@@ -36,6 +37,24 @@ openProjectsRouter.post('/uploadSingle/:openID', upload.single('file'), (req, re
         res.send(err);
     }
 });
+
+openProjectsRouter.post('postComment/', (req,res) => {
+    console.log("POST /postComment");
+    if(!req.session.isLoggedIn){
+        return res.sendStatus(403);
+    }
+    
+    const {openProjectID, commentText} = req.body;
+    const author = req.session.userID;
+    try{
+        commentModel.createComment(openProjectID, author, commentText);
+        return true;
+    } catch(err) {
+        console.error(err);
+        return false;
+    }
+
+})
 
 
 // idk, send the userID and projectID via query
@@ -113,6 +132,22 @@ openProjectsRouter.get("/viewAllProjects", (req, res) => {
         projects[i].author = username;
     }
     res.render("viewAllProjects", {session: req.session, projects})
+});
+
+//View Project Comments
+openProjectsRouter.get("/:projectID/comments", (req, res) => {
+    const projectID = req.params.projectID;
+    let project = openProjectsModel.findProjectsByProjectID(projectID);
+    let comments = commentModel.getCommentByProject(projectID);
+
+    project.authorName = userModel.getUserNameByID(project.author);
+
+    for(let i = 0; i < comments.length; i++)
+    {
+        comments[i].author = userModel.getUserNameByID(comments[i].author);
+    }
+
+    res.render("comments", {session: req.session}, project, {comments})
 });
 
 module.exports = openProjectsRouter;

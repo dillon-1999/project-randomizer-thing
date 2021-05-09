@@ -24,7 +24,14 @@
                             <p>Not Finished</p>
                         <% } %>
                     </div>
-                    <hr>
+                    <form id="commentsLink" class="md:w-1/2 mx-auto">
+                        <div class="flex space-y-3">
+                            <input id="projectID" name="projectID" type="hidden" value= <%= projects[i].openID %> > <!-- Passes project ID to form -->
+                        </div>
+                        <button
+                            class="justify-self-center bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
+                            >Comments</button>
+                    </form>
                 <% } %>
                 </div>
                 <%- include('partials/footer.ejs') %>

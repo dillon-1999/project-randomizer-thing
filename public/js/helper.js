@@ -117,6 +117,24 @@ async function openNewProject(project) {
     }
 }
 
+//Purpose: Posts new comment
+//Link Used: /openProjects/comments 
+//Param: comment (comment (text), author (text), project (text))
+async function postNewComment(openProject, commentText) {
+    try
+    {
+        const response = await fetch(`${window.location.origin}/openProjects/postComment`, {
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": JSON.stringify({openProject, commentText})
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 // -----FORMS-----
 
 //Purpose: Registers a new user
@@ -195,5 +213,28 @@ if(document.getElementById('difficultyForm')){
         });
         document.querySelector('#projectOffer').append(newButton);
 
+    });
+}
+
+//Purpose: Posts a new comment
+//Used at: /openProjects/comments
+if(document.getElementById('commentForm')){
+    document.getElementById('commentForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        let commentText = document.getElementById('commentText').value;
+        let projectID = document.getElementById('projectID');
+        
+        postNewComment(projectID, commentText);
+    });
+}
+
+//Purpose: Takes User to Comments
+//Used at: /openProjects/viewAllProjects
+if(document.getElementById('commentsLink')){
+    document.getElementById('commentsLink').addEventListener('click', (event) => {
+        event.preventDefault();
+        console.log("Attempting to redirect");
+        let openProjectID = document.getElementById('projectID');
+        window.location.replace(`${window.location.origin}/openProjects/${openProjectID}/comments`);
     });
 }
