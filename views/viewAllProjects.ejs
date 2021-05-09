@@ -17,10 +17,13 @@
                 <% for(let i = 0; i < projects.length; i++) { %>
                     <div>
                         <p>Author: <%= projects[i].author %></p>
+			<p>Project Name: <%= projects[i].projectName %> </p>
                         <p>Started On: <%= Date(projects[i].startedOn) %> </p>
                         <% if(projects[i].isFinished === 1){ %>
                             <p>Finished On: <%= Date(projects[i].finishedOn) %> </p>
-                        <% } else {%>
+                            <a href="file/<%=projects[i].fileHash%>" download><%= projects[i].fileHash %> </a>
+
+	               <% } else {%>
                             <p>Not Finished</p>
                         <% } %>
                     </div>

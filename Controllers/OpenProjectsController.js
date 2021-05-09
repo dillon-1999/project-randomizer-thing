@@ -83,6 +83,8 @@ openProjectsRouter.get("/getAllOpenProjects", (req, res) => {
     for(let i = 0; i < projects.length; i++)
     {
         let { username } = userModel.getUserNameByID(projects[i].author);
+	let project = projectModel.findProjectByProjectID(projects[i].project);
+	projects[i].projectName = project.name;
         projects[i].author = username;
     }
     const success = (projects) ? true : false;
@@ -94,7 +96,7 @@ openProjectsRouter.get('/file/:fileName', (req, res) => {
         return res.sendStatus(403);
     }
 
-    res.sendFile(`/home/dillon_boatman/project-randomizer/uploads/${req.params.fileName}`, (err) => {
+    res.sendFile(`/root/project/project-randomizer-thing/uploads/${req.params.fileName}`, (err) => {
         if(err){
             console.log("SO the problem is your path dawg. change it so the absolute path on your machine");
         } else {
@@ -131,7 +133,9 @@ openProjectsRouter.get("/viewAllProjects", (req, res) => {
     for(let i = 0; i < projects.length; i++)
     {
         let { username } = userModel.getUserNameByID(projects[i].author);
-        projects[i].author = username;
+        let project = projectModel.findProjectByProjectID(projects[i].project);
+	projects[i].projectName = project.name;
+	projects[i].author = username;
     }
     res.render("viewAllProjects", {session: req.session, projects})
 });
