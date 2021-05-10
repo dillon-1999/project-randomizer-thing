@@ -5,6 +5,7 @@ const openProjectsRouter = express.Router();
 const { openProjectsModel } = require("../Models/OpenProjectModel");
 const { userModel } = require("../Models/UserModel");
 const { projectModel } = require("../Models/ProjectModel");
+const { commentModel } = require("../Models/CommentModel");
 const crypto = require("crypto");
 // const CryptoJS = require("crypto-js");
 const fs = require('fs');
@@ -45,7 +46,25 @@ openProjectsRouter.post('/uploadSingle/:openID', upload.single('file'), (req, re
     }
 });
 
-// idk, send the userID and projectID via query
+openProjectsRouter.post('/postComment', (req,res) => {
+    console.log("POST /postComment");
+    if(!req.session.isLoggedIn){
+        return res.sendStatus(403);
+    }
+    
+    const {openProjectID, commentText} = req.body;
+    const author = req.session.userID;
+    try{
+        commentModel.createComment(openProjectID, author, commentText);
+        return true;
+    } catch(err) {
+        console.error(err);
+        return false;
+    }
+
+})
+
+//User Creates a New Open Project
 openProjectsRouter.post('/openProject', (req, res) => {
     console.log("POST /openProject");
     if(!req.session.isLoggedIn){
@@ -138,6 +157,31 @@ openProjectsRouter.get("/viewAllProjects", (req, res) => {
 	projects[i].author = username;
     }
     res.render("viewAllProjects", {session: req.session, projects})
+});
+
+//View Project Comments
+openProjectsRouter.get("/comments/:openID", (req, res) => {
+    console.log("GET /:openID/comments")
+    console.log(req.params.openID);
+    const openID = req.params.openID;
+    let openProject = openProjectsModel.findProjectByOpenID(openID);
+    let project = projectModel.findProjectByProjectID(openProject.project);
+
+    let comments = commentModel.getCommentByProject(openID);
+
+    //Converting from uuid to Username
+    let {username} = userModel.getUserNameByID(openProject.author);
+    openProject.author = username;
+
+    for(let i = 0; i < comments.length; i++)
+    {
+        let {username} = userModel.getUserNameByID(comments[i].author);
+        
+        comments[i].author = username;
+        comments[i].datePosted = new Date(comments[i].datePosted / 1);
+    }
+
+    res.render("comments", {session: req.session, openProject, project, comments})
 });
 
 module.exports = openProjectsRouter;

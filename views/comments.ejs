@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{*}SNWBL - Project Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/tailwind.css">
+    <script src="/js/helper.js" defer></script>
+</head>
+<body class="bg-gradient-to-r from-gray-500 via-white to-gray-500">
+    <div>
+        <%- include('partials/header.ejs') %>
+        <div>
+            <% if(session.isLoggedIn === true){ %>
+                
+                <div id="projectDiv">
+                    <h2> Project: <%= project.name %>  </h2>
+                    <h4> Author:  <%= openProject.author %> </h4>
+                    <h4> Started On: <%= new Date(openProject.startedOn / 1) %> </h4>
+                    <% if(openProject.isFinished === 1){ %>
+                        <p>Finished On: <%= new Date(openProject.finishedOn / 1) %> </p>
+                    <% } else {%>
+                        <p>Not Finished</p>
+                    <% } %>
+                </div>
+
+                <% if(openProject.isFinished === 1){ %> 
+                    <div class='scrollable'>
+                        <h3>Comments:</h3>
+                        <hr>
+                        <% for(let i = 0; i < comments.length; i++) { %> 
+                            <div>
+                                <h5>Posted By: <%= comments[i].author %> </h5>
+                                <h6>Posted On: <%= comments[i].datePosted %> </h6>
+                                <p> <%= comments[i].commentText %></p>
+                                <hr>
+                            </div>
+                        <% } %> 
+                    </div>
+                    <form id="commentForm" class="md:w-1/2 mx-auto">
+                        <div class="flex space-y-3">
+                            <label for="commentText" class="w-20 text-right mr-6 m2">Comment:</label>
+                            <input id="commentText" name="commentText" type="text" class="flex-1" required>
+                            <input id="openProjectID" name="openProjectID" type="hidden" value=<%= openProject.openID %>> <!-- Passes project ID to form -->
+                        </div>
+                        <button
+                            class="justify-self-center bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
+                            >Post Comment</button>
+                    </form>
+                <% } %> 
+                <%- include('partials/footer.ejs') %>
+            <% } else {%>
+                <%- include('partials/accessDenied.ejs') %>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

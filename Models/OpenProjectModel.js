@@ -65,6 +65,25 @@ class OpenProjectsModel {
         }
     }
 
+    //Find projects by the OpenID (not ProjectID)
+    findProjectByOpenID (openID)
+    {
+        try 
+        {
+            const sql = `
+                SELECT *
+                FROM OpenProjects
+                WHERE openID = @openID`;
+            const stmt = db.prepare(sql);
+            return stmt.get({openID});
+        }
+        catch (err)
+        {
+            console.error(err);
+            return false;
+        }
+    }
+
     //Find projects by the ProjectID (not OpenID)
     /* dillon: 
         changed param to projectID so the object could be simplified

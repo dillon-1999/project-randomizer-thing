@@ -27,3 +27,14 @@ CREATE TABLE IF NOT EXISTS OpenProjects (
     FOREIGN KEY (project) REFERENCES Projects(projectID),
     FOREIGN KEY (author) REFERENCES Users(userID)
 );
+
+-- db full of comments made by users
+CREATE TABLE IF NOT EXISTS Comments (
+    commentID  TEXT PRIMARY KEY,
+    openProject TEXT NOT NULL, -- projectID that was commented on
+    author TEXT NOT NULL,  --author of comment
+    commentText TEXT NOT NULL,
+    datePosted TEXT NOT NULL,
+    FOREIGN KEY (openProject) REFERENCES OpenProjects(openID),
+    FOREIGN KEY (author) REFERENCES Users(userID)
+);
