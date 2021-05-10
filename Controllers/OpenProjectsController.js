@@ -115,7 +115,7 @@ openProjectsRouter.get('/file/:fileName', (req, res) => {
         return res.sendStatus(403);
     }
 
-    res.sendFile(`/root/project/project-randomizer-thing/uploads/${req.params.fileName}`, (err) => {
+    res.sendFile(`/root/project-randomizer-thing/uploads/${req.params.fileName}`, (err) => {
         if(err){
             console.log("SO the problem is your path dawg. change it so the absolute path on your machine");
         } else {
