@@ -30,17 +30,17 @@ class OpenProjectsModel {
         }
     }
 
-    uploadSingleFile(fileHash, project){
+    uploadSingleFile(fileHash, openID){
         try {
             const sql = `UPDATE OpenProjects
                          SET 
-                         fileHash = @filehash
-                         finishedOn = @finishedOn
-                         isFinished = 1
+                            fileHash = @fileHash,
+                            finishedOn = @finishedOn,
+                            isFinished = 1
                          WHERE
-                         project = @projectID`;
+                            openID = @openID`;
             const finishedOn = Date.now();
-            return db.prepare(sql).run({fileHash, finishedOn, project});
+            return db.prepare(sql).run({fileHash, finishedOn, openID});
         } catch (err){
             console.error(err);
             return false;
@@ -138,13 +138,33 @@ class OpenProjectsModel {
             return false;
         }
     }
+
+    getFileHash(openID){
+        try{
+            const sql = 'SELECT fileHash FROM OpenProjects WHERE openID = @openID';
+            return db.prepare(sql).get({openID});
+        } catch(err){
+            console.error(err);
+            return false;
+        }
+    }
+
+    getAuthor(openID){
+        try {
+            const sql = `SELECT author FROM OpenProjects WHERE openID = @openID`;
+            return db.prepare(sql).get({openID});
+        } catch(err){
+            console.error(err);
+            return false;
+        }
+    }
 }
 
 const openProjects = new OpenProjectsModel(db);
 // const proj = {
-//     project: 'a2196aed-3466-44ed-9cab-a046adfed0ea',
+//     project: '455601c2-3d52-4b88-9aa1-27bba59dbbac',
 //     author: '5f2007ca-a9a6-4d62-b7f1-6f2eee076e3c'
 // }
 // openProjects.createOpenProject(proj)
-console.log()
+// console.log(openProjects.getOpenProjects());
 exports.openProjectsModel = new OpenProjectsModel(db);

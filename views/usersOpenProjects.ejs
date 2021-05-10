@@ -12,31 +12,45 @@
     <div>
         <%- include('partials/header.ejs') %>
         <div>
-            <div class='scrollable'>
+            <div  >
             <% if(session.isLoggedIn === true) { %>   
                 <% if(projects.length === 0){ %>
                     <h2>No Open Projects</h2>
                 <% } %>
-                <% for( let i = 0; i < projects.length; i++) { %>
-                    <div>
-                        <p class="name"> Project Name: <%= projects[i].name %> </p>
-                        <p class="description"> Description: <%= projects[i].description %> </p>
-                        <p class="difficulty"> Difficulty: <%= projects[i].difficulty%> </p>
-                        <% if(projects[i].finishedOn != null) {%>
-                            <p>Status: Finished</p>
-                        <% } else {%>
-                            <p>Status: Not Finished</p>
-                        <% } %>
-                            <button
-                            id="uploadButton"
-                            class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
-                            >Upload?</button>
-                            <div id="uploadModal"></div>
-                    </div>
-                    <hr>
-                <% } %>
+                <div id='projects'>
+                    <% for( let i = 0; i < projects.length; i++) { %>
+                        <div id='project'>
+                            <p class="name"> Project Name: <%= projects[i].name %> </p>
+                            <p class="description"> Description: <%= projects[i].description %> </p>
+                            <p class="difficulty"> Difficulty: <%= projects[i].difficulty%> </p>
+                            <% if(projects[i].finishedOn != null) {%>
+                                <p>Status: Finished</p>
+                                <a href="file/<%=projects[i].fileHash%>" download><%= projects[i].fileHash %> </a>
+                            <% } else {%>
+                                <p>Status: Not Finished</p>
+                            <% } %>
+                            <form action='uploadFiles/<%= projects[i].openID %>'>
+                                <button
+                                id="uploadButton"
+                                class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
+                                >Upload?</button>
+                            </form>                                
+                                <p class="error"></p>
+                        </div>
+                        <hr>
+                    <% } %>
+                </div>
             </div>
-            <%- include('partials/footer.ejs') %>
+            <form action="/users/logout" method="POST" id="logoutForm">
+                <button
+                class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
+                >Logout</button>
+            </form>
+            <form action='/users/homepage'>
+                <button
+                class="bg-blue-500 hover:bg-blue-400 text-gray font-mono m-0.5 border-b-4 px-3 py-3 border-blue-700 hover:border-blue-500 rounded"
+                >Back to homepage!</button>
+            </form>
         <% }  else {%>
             <%- include('partials/accessDenied.ejs') %>
         <% } %>

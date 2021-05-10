@@ -35,7 +35,7 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, "public"), {
     extensions: ['html'],
 }));
-
+app.use(express.static("uploads"));
 app.use('/users', usersRouter);
 app.use('/projects', projectsRouter);
 app.use('/openProjects', openProjectsRouter);
