@@ -120,7 +120,7 @@ async function openNewProject(project) {
 //Purpose: Posts new comment
 //Link Used: /openProjects/comments 
 //Param: comment (comment (text), author (text), project (text))
-async function postNewComment(openProject, commentText) {
+async function postNewComment(openProjectID, commentText) {
     try
     {
         const response = await fetch(`${window.location.origin}/openProjects/postComment`, {
@@ -128,10 +128,28 @@ async function postNewComment(openProject, commentText) {
             "headers": {
                 "Content-Type": "application/json"
             },
-            "body": JSON.stringify({openProject, commentText})
+            "body": JSON.stringify({openProjectID, commentText})
         })
+        if(response.ok){
+            location.reload();
+        } else if(response.status >= 400 && response.status < 500) {
+            console.log(response.status);
+        }
     } catch (err) {
         console.log(err);
+    }
+}
+
+//Is This Necessary?
+async function commentReDirect(openProjectID) {
+    try
+    {
+        
+        window.location.replace(`${window.location.origin}/openProjects/${openProjectID}/comments`);
+    }
+    catch (err)
+    {
+        console.err(err);
     }
 }
 
@@ -239,19 +257,19 @@ if(document.getElementById('commentForm')){
     document.getElementById('commentForm').addEventListener('submit', (event) => {
         event.preventDefault();
         let commentText = document.getElementById('commentText').value;
-        let projectID = document.getElementById('projectID');
+        let openProjectID = document.getElementById('openProjectID').value;
         
-        postNewComment(projectID, commentText);
+
+        postNewComment(openProjectID, commentText);
     });
 }
 
-//Purpose: Takes User to Comments
-//Used at: /openProjects/viewAllProjects
 if(document.getElementById('commentsLink')){
     document.getElementById('commentsLink').addEventListener('click', (event) => {
+        console.log("Attempting to redirect")
+        let openID = document.getElementById('openProjectID');
+        console.log(`OpenID: ${openID.value}`)
         event.preventDefault();
-        console.log("Attempting to redirect");
-        let openProjectID = document.getElementById('projectID');
-        window.location.replace(`${window.location.origin}/openProjects/${openProjectID}/comments`);
+        window.location.replace(`${window.location.origin}/openProjects/comments/${openID.value}`);
     });
 }

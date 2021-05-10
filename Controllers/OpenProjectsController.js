@@ -46,7 +46,7 @@ openProjectsRouter.post('/uploadSingle/:openID', upload.single('file'), (req, re
     }
 });
 
-openProjectsRouter.post('postComment/', (req,res) => {
+openProjectsRouter.post('/postComment', (req,res) => {
     console.log("POST /postComment");
     if(!req.session.isLoggedIn){
         return res.sendStatus(403);
@@ -64,7 +64,7 @@ openProjectsRouter.post('postComment/', (req,res) => {
 
 })
 
-// idk, send the userID and projectID via query
+//User Creates a New Open Project
 openProjectsRouter.post('/openProject', (req, res) => {
     console.log("POST /openProject");
     if(!req.session.isLoggedIn){
@@ -160,19 +160,28 @@ openProjectsRouter.get("/viewAllProjects", (req, res) => {
 });
 
 //View Project Comments
-openProjectsRouter.get("/:projectID/comments", (req, res) => {
-    const projectID = req.params.projectID;
-    let project = openProjectsModel.findProjectsByProjectID(projectID);
-    let comments = commentModel.getCommentByProject(projectID);
+openProjectsRouter.get("/comments/:openID", (req, res) => {
+    console.log("GET /:openID/comments")
+    console.log(req.params.openID);
+    const openID = req.params.openID;
+    let openProject = openProjectsModel.findProjectByOpenID(openID);
+    let project = projectModel.findProjectByProjectID(openProject.project);
 
-    project.authorName = userModel.getUserNameByID(project.author);
+    let comments = commentModel.getCommentByProject(openID);
+
+    //Converting from uuid to Username
+    let {username} = userModel.getUserNameByID(openProject.author);
+    openProject.author = username;
 
     for(let i = 0; i < comments.length; i++)
     {
-        comments[i].author = userModel.getUserNameByID(comments[i].author);
+        let {username} = userModel.getUserNameByID(comments[i].author);
+        
+        comments[i].author = username;
+        comments[i].datePosted = new Date(comments[i].datePosted / 1);
     }
 
-    res.render("comments", {session: req.session}, project, {comments})
+    res.render("comments", {session: req.session, openProject, project, comments})
 });
 
 module.exports = openProjectsRouter;
